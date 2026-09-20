@@ -29,8 +29,17 @@
 
 ## Chunking Strategy
 
-**Chunk size:**
-**Overlap:**
+**Chunk size:** 500 characters maximum
+**Overlap:** 1 complete sentence, plus the thread question in every chunk
+
+The advice threads are made of short labelled replies. Across the corpus, a
+reply averages about 122 characters, so 500 characters usually holds the
+thread question and two or three complete replies without mixing too many
+topics. The starter's 800-character windows made 26 chunks and left a
+2-character fragment at the end of one document. My chunker moves a reply to
+the next chunk when it does not fit, repeats the `THREAD:` question, and
+repeats the previous chunk's final sentence as context. It only splits a reply
+at sentence boundaries when that one reply is too large to fit by itself.
 
 <!-- What about YOUR documents made you pick these numbers? Short posts and
      long sectioned guides don't want the same chunking, and "800 seemed
@@ -53,29 +62,64 @@
 
      Milestone 3. -->
 
-**Chunk 1** — source: `` — produced by: ``
+**Chunk 1** — source: `thread_bike_commute.txt#0` — produced by: `chunker.py::split_documents`
 
 ```
+THREAD: Is a bike worth it for a 20 minute walk commute?
+
+--- reply 1 (14 votes) ---
+Yeah. Cuts an 18 minute walk to about 6. The thing nobody mentions is storage — covered bike parking exists at three buildings and is full by 9am at all three.
+
+--- reply 2 (9 votes) ---
+Counterpoint, I sold mine. Between November and March the paths are either icy or salted and salt destroys a drivetrain in one season.
 ```
 
-**Chunk 2** — source: `` — produced by: ``
+**Chunk 2** — source: `thread_first_gen.txt#0` — produced by: `chunker.py::split_documents`
 
 ```
+THREAD: Anything specific for first-generation students?
+
+--- reply 1 (33 votes) ---
+The advising office has a specific programme and it is genuinely good, but it is opt-in and badly publicised. Ask for it by name.
+
+--- reply 2 (41 votes) ---
+The thing I'd say: the unwritten rules are the hard part, not the coursework. Ask about the unwritten rules explicitly. People are happy to explain them and nobody volunteers them.
 ```
 
-**Chunk 3** — source: `` — produced by: ``
+**Chunk 3** — source: `thread_laptop_specs.txt#0` — produced by: `chunker.py::split_documents`
 
 ```
+THREAD: How much laptop do I actually need for CS courses?
+
+--- reply 1 (31 votes) ---
+Less than the recommended spec page says. 16GB of RAM is the one number worth paying for; everything else you'll never notice.
+
+--- reply 2 (18 votes) ---
+Adding: the lab machines exist and are better than anything you'll buy. For the heavy assignments people just use those.
 ```
 
-**Chunk 4** — source: `` — produced by: ``
+**Chunk 4** — source: `thread_office_hours_etiquette.txt#0` — produced by: `chunker.py::split_documents`
 
 ```
+THREAD: Is it weird to go to office hours with no specific question?
+
+--- reply 1 (44 votes) ---
+No, and this is the single most common thing first years get wrong. 'I'm following the lectures but I don't feel like I understand the shape of it' is a completely normal thing to say.
+
+--- reply 2 (29 votes) ---
+They're usually empty. You are doing the instructor a favour by turning up.
 ```
 
-**Chunk 5** — source: `` — produced by: ``
+**Chunk 5** — source: `thread_roommate_conflict.txt#0` — produced by: `chunker.py::split_documents`
 
 ```
+THREAD: Roommate situation isn't working. What now?
+
+--- reply 1 (28 votes) ---
+Talk to your RA early, and frame it as 'we need help sorting this out' rather than 'move me'. Room changes are possible but the process starts with mediation and skipping that step slows it down.
+
+--- reply 2 (14 votes) ---
+Room changes happen at the semester boundary almost always, and mid-semester only in fairly serious cases.
 ```
 
 ## Sample Answer

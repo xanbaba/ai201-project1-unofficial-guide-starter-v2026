@@ -23,6 +23,7 @@ your pipeline, not giving up.
 """
 
 from dataclasses import dataclass
+import re
 
 import config
 from ingest import Document
@@ -84,20 +85,146 @@ def split_documents(documents: list[Document]) -> list[Chunk]:
     """
     Split documents into chunks. ⚠️ REPLACE THE BODY OF THIS IN MILESTONE 3.
 
-    Right now it just calls the fallback. That is the plain, generic behaviour
-    the brief is talking about.
-
-    When you write your own strategy, set `produced_by` to
-    "chunker.py::split_documents" so your README's Sample Chunks section names
-    the right function. `app.py chunks` prints that string for you.
-
-    Things worth thinking about before you write any code:
-      - Are your documents short posts or long guides?
-      - Is the useful information in one sentence, or spread over a paragraph?
-      - Would splitting on paragraph breaks keep more thoughts intact than
-        splitting on a character count?
+    Advice threads are split at reply boundaries. Every chunk repeats the
+    original `THREAD:` question; continuation chunks also retain the previous
+    chunk's last sentence as context. A reply moves to the next chunk when it
+    would exceed the limit, and only an oversized reply is split by sentences.
     """
-    return fallback_split(documents)
+    chunk_size = config.CHUNK_SIZE
+    sentence_overlap = config.SENTENCE_OVERLAP
+    if chunk_size <= 0:
+        raise ValueError("CHUNK_SIZE has to be positive")
+    if sentence_overlap < 0:
+        raise ValueError("SENTENCE_OVERLAP cannot be negative")
+
+    def sentences(text: str) -> list[str]:
+        """Split prose into complete sentences, retaining punctuation."""
+        return [
+            sentence.strip()
+            for sentence in re.split(r"(?<=[.!?])\s+", text.strip())
+            if sentence.strip()
+        ]
+
+    def split_long_sentence(sentence: str, limit: int) -> list[str]:
+        """Use words, then a hard limit, if one sentence alone is oversized."""
+        if len(sentence) <= limit:
+            return [sentence]
+
+        pieces: list[str] = []
+        remaining = sentence
+        while len(remaining) > limit:
+            cut = remaining.rfind(" ", 0, limit + 1)
+            if cut <= 0:
+                cut = limit
+            pieces.append(remaining[:cut].strip())
+            remaining = remaining[cut:].strip()
+        if remaining:
+            pieces.append(remaining)
+        return pieces
+
+    def split_oversized_reply(label: str, body: str, header: str) -> list[tuple[str, str]]:
+        """Make sentence-sized pieces only when a reply cannot stand alone."""
+        room = chunk_size - len(header) - len(label) - 2
+        if room <= 0:
+            raise ValueError("CHUNK_SIZE is too small to hold a thread header and reply label")
+
+        pieces: list[str] = []
+        current: list[str] = []
+        current_length = 0
+        for sentence in sentences(body) or [body.strip()]:
+            for part in split_long_sentence(sentence, room):
+                added = len(part) + (1 if current else 0)
+                if current and current_length + added > room:
+                    pieces.append(" ".join(current))
+                    current = []
+                    current_length = 0
+                current.append(part)
+                current_length += len(part) + (1 if current_length else 0)
+        if current:
+            pieces.append(" ".join(current))
+
+        return [
+            (label if number == 1 else f"{label} (continued)", piece)
+            for number, piece in enumerate(pieces, 1)
+        ]
+
+    def parse_thread(text: str) -> tuple[str, list[tuple[str, str]]]:
+        """Return a thread question and its labelled replies."""
+        match = re.match(r"^(THREAD:.*?)(?:\n\n|\n)(.*)$", text, flags=re.DOTALL)
+        if not match:
+            return "THREAD: Context", [("--- content ---", text)]
+
+        header, remainder = match.groups()
+        parts = re.split(r"(?m)^(--- reply \d+ \(\d+ votes\) ---)\n", remainder)
+        replies = [
+            (parts[position].strip(), parts[position + 1].strip())
+            for position in range(1, len(parts) - 1, 2)
+            if parts[position + 1].strip()
+        ]
+        return header.strip(), replies or [("--- content ---", remainder.strip())]
+
+    def make_chunk(header: str, overlap: list[str]) -> str:
+        parts = [header]
+        if overlap:
+            parts.append("Previous context: " + " ".join(overlap))
+        return "\n\n".join(parts)
+
+    def append_part(chunk: str, part: str) -> str:
+        return f"{chunk}\n\n{part}"
+
+    chunks: list[Chunk] = []
+    for doc in documents:
+        header, replies = parse_thread(doc.text)
+        reply_queue: list[tuple[str, str]] = []
+        for label, body in replies:
+            whole_reply = f"{label}\n{body}"
+            if len(append_part(header, whole_reply)) > chunk_size:
+                reply_queue.extend(split_oversized_reply(label, body, header))
+            else:
+                reply_queue.append((label, body))
+
+        current = make_chunk(header, [])
+        has_reply = False
+        last_sentences: list[str] = []
+        index = 0
+
+        def finish_current() -> None:
+            nonlocal current, has_reply, index
+            if has_reply:
+                chunks.append(
+                    Chunk(
+                        text=current,
+                        source=doc.source,
+                        index=index,
+                        produced_by="chunker.py::split_documents",
+                    )
+                )
+                index += 1
+            overlap = last_sentences[-sentence_overlap:] if sentence_overlap else []
+            current = make_chunk(header, overlap)
+            has_reply = False
+
+        for label, body in reply_queue:
+            reply = f"{label}\n{body}"
+            if len(append_part(current, reply)) > chunk_size and has_reply:
+                finish_current()
+
+            # A large complete reply may fit with the header but not after its
+            # overlap sentence. Keep the reply whole and omit that overlap only
+            # when needed to honor the maximum size.
+            if len(append_part(current, reply)) > chunk_size and not has_reply:
+                current = make_chunk(header, [])
+
+            if len(append_part(current, reply)) > chunk_size:
+                raise ValueError(f"Reply in {doc.source} is still too large after sentence splitting")
+
+            current = append_part(current, reply)
+            has_reply = True
+            last_sentences = sentences(body) or [body]
+
+        finish_current()
+
+    return chunks
 
 
 def describe(chunks: list[Chunk]) -> str:

@@ -27,8 +27,9 @@ CORPUS = "advice_threads"
 # These are deliberately plain, generic numbers. Milestone 3 is where you
 # replace them with numbers that fit the documents you actually read.
 
-CHUNK_SIZE = 800        # characters per chunk
-CHUNK_OVERLAP = 120     # characters shared between neighbouring chunks
+CHUNK_SIZE = 500        # maximum characters per custom chunk
+CHUNK_OVERLAP = 120     # characters used only by fallback_split
+SENTENCE_OVERLAP = 1    # complete sentences repeated between custom chunks
 
 
 # ─── Retrieval (Milestone 4) ─────────────────────────────────────────────────
