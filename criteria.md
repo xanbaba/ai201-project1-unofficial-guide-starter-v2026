@@ -25,7 +25,7 @@ contains the answer.
 **Why this target:**
 <!-- e.g. "One of my questions is about a topic only two documents mention, so
      I expect that one to be hard." -->
-
+Retrieving the chunk that has the asnwer is the core purpose of this app; getting that chunk in at least 4 out of 5 times would prove that the system is reliable enough. It might get one wrong as there are questions that might imply one meaning and get mapped to some chunk, although it was supposed to mean something a bit different. It can be observed when the question is complex enough and the asnwer is in multiple chunks.
 ---
 
 ## 2. Every answer names a source
@@ -35,7 +35,7 @@ Every answer the system produces names at least one source document.
 **Why this target:**
 <!-- Why all five and not four? What about your setup makes that achievable —
      or what would have to go wrong for it not to be? -->
-
+This is a functionality that either works or not. So, it is important that all 5/5 answers cite a document where they got the info from. Otherwise, this could be halucinated info, and it is a bug in the system. It must written in code so that every answer gives out a document used.
 ---
 
 ## 3. The relevance gate stops out-of-corpus questions
@@ -55,7 +55,7 @@ in at least 4 of 5 tries.
 
 ---
 
-## 4. Something about your chunks
+## 4. Every chunk retains its thread question
 
 <!-- YOU WRITE THIS ONE.
 
@@ -68,16 +68,18 @@ in at least 4 of 5 tries.
           sentence cut in half at either end."
        - "No chunk is shorter than 200 characters, since anything below that
           in my corpus turned out to be a heading with no content under it." -->
-
+Every chunk begins with the `THREAD: question from its source document`
 
 
 **Why this target:**
 
-
+Replies in this corpus often make sense only in relation to the original question. Repeating the short thread question gives each chunk its topic and context, so later replies can be retrieved and used without needing the preceding chunk.
 
 ---
 
-## 5. Your choice
+## 5. The complete workflow is fast
+
+For each of my five test questions, with the advice_threads index already built and caching disabled, the system returns either an answer or refusal within 10 seconds, measured from immediately before run_eval.py::run_once begins until it returns its result.
 
 <!-- YOU WRITE THIS ONE TOO.
 
@@ -91,7 +93,7 @@ in at least 4 of 5 tries.
 
 **Why this target:**
 
-
+The corpus has only 26 indexed chunks, so loading, chunking, embedding, and retrieval are not repeated for each question. The main variable is one Gemini answer-generation call; 10 seconds is short enough for an interactive question-answering tool while allowing ordinary model-response variation.
 
 ---
 
