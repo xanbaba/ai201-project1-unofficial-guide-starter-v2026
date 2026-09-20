@@ -191,93 +191,15 @@ Room changes happen at the semester boundary almost always, and mid-semester onl
 
 | Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
 |---|---|---|---|---|---|
-| 1. Retrieved chunk contains the answer | 4 of 5 | 5 of 5 | 5 of 5 | 5 of 5 | MET |
-| 2. Every answer names a source | 5 of 5 | 5 of 5 | 5 of 5 | 5 of 5 | MET |
-| 3. Gate stops out-of-corpus questions | 4 of 5 | 5 of 5 | 5 of 5 | 5 of 5 | MET |
-| 4. Every chunk retains its thread question | Every chunk begins with its source `THREAD:` question | 24 of 26 | 24 of 26 | 24 of 26 | MISSED |
-| 5. The complete workflow is fast | All 5 questions return within 10 seconds | Not measured | Not measured | Not measured | NOT MEASURED |
+| 1. Retrieved chunk contains the answer | 4 of 5 |  |  |  |  |
+| 2. Every answer names a source | 5 of 5 |  |  |  |  |
+| 3. Gate stops out-of-corpus questions | 4 of 5 |  |  |  |  |
+| 4. | | | | | |
+| 5. | | | | | |
 
 <!-- Underneath, paste the REAL output for each criterion from one of your
      runs — the actual text your system produced, not a description of it.
      Name the file and function that produced it. -->
-
-### Evidence for criteria 1 and 2
-
-Produced by: `results/run_2026-09-20_1840_before.md`, from
-`run_eval.py::main`. Retrieval was performed by `store.py::search` using
-chunks from `chunker.py::split_documents`.
-
-**What to do if I cannot finish my assignment by deadline? — run 1**
-
-- Sources retrieved: `thread_commuting.txt`, `thread_first_year_regret.txt`, `thread_group_project.txt`, `thread_late_work.txt`
-
-```
-If you cannot finish an assignment by the deadline, you should ask for an extension before the deadline arrives, as almost everyone will grant extra time if asked in advance rather than after the fact (*thread_late_work.txt*). Additionally, if you have a documented illness, that goes through the dean of students rather than the instructor (*thread_late_work.txt*).
-```
-
-**What study spots do you know that have good coffee nearby? — run 1**
-
-- Sources retrieved: `thread_commuting.txt`, `thread_first_gen.txt`, `thread_internship_timing.txt`, `thread_laundry_timing.txt`, `thread_study_spots.txt`
-
-```
-Ridgeway Café is recommended as a study spot that has good coffee and stays empty and quiet before 10am (thread_study_spots.txt).
-```
-
-**I want to transfer credits for my major. My department agreed verbally. — run 1**
-
-- Sources retrieved: `thread_changing_major.txt`, `thread_first_year_regret.txt`, `thread_office_hours_etiquette.txt`, `thread_pass_fail.txt`, `thread_transfer_credits.txt`
-
-```
-You should get the agreement in writing from the department before you rely on it, as a verbal yes may not survive a staff change.
-
-Source: thread_transfer_credits.txt
-```
-
-**Can I change my meal plan? — run 1**
-
-- Sources retrieved: `thread_changing_major.txt`, `thread_first_year_regret.txt`, `thread_meal_plan_tier.txt`, `thread_textbook_editions.txt`, `thread_transfer_credits.txt`
-
-```
-Yes, you can change your meal plan, but you can only change it once and only in the first ten days of the semester (thread_meal_plan_tier.txt).
-```
-
-**When does library close — run 1**
-
-- Sources retrieved: `thread_group_project.txt`, `thread_internship_timing.txt`, `thread_laundry_timing.txt`, `thread_sleep_schedule.txt`, `thread_study_spots.txt`
-
-```
-The library is open until 2am, according to thread_sleep_schedule.txt.
-```
-
-### Evidence for criterion 4
-
-Produced by: `app.py::cmd_chunks`, using chunks from
-`chunker.py::fallback_split`. The baseline created 26 chunks. The 24 first
-chunks from source documents began with `THREAD:`, but these two continuation
-chunks did not:
-
-```text
-Chunk 2 | source: thread_bike_commute.txt#1
-nd it's the only reason I got mine back after it was taken.
-
-Chunk 2 | source: thread_first_year_regret.txt#1
-) ---
-That your adviser's job is partly to know the exceptions to rules. Ask before assuming a deadline is fixed.
-```
-
-### Evidence for criterion 3
-
-Produced by: `results/run_2026-09-20_1840_before.md`, from
-`run_eval.py::check_out_of_scope`. The relevance cutoff was `0.6`; the gate
-refused 5 of 5 out-of-corpus questions.
-
-| Out-of-scope question | Best distance | Gate |
-|---|---|---|
-| What is the capital of Mongolia? | 0.890 | refused |
-| How do I change the oil in a diesel engine? | 0.930 | refused |
-| Who won the 1994 World Cup? | 0.787 | refused |
-| What is the recommended dosage of ibuprofen for a headache? | 0.828 | refused |
-| How do I write a for loop in Rust? | 0.871 | refused |
 
 ## Verdicts
 
@@ -292,11 +214,11 @@ refused 5 of 5 out-of-corpus questions.
 
 | # | Criterion | Verdict | How I decided |
 |---|---|---|---|
-| 1 | Retrieved chunks contain the answer | MET | In each of the three runs, all five questions retrieved the source thread containing the expected answer, exceeding the target of 4 of 5. |
-| 2 | Every answer names a source | MET | All five answers in each run named a source document, meeting the 5 of 5 target. |
-| 3 | Gate stops out-of-corpus questions | MET | The deterministic gate check refused all 5 of 5 out-of-corpus questions at the 0.6 cutoff, exceeding the target of 4 of 5. |
-| 4 | Every chunk retains its thread question | MISSED | The baseline fixed-window chunker produced 26 chunks, but 2 continuation chunks began in the middle of text rather than with their source `THREAD:` question. |
-| 5 | The complete workflow is fast | NOT MEASURED | The baseline evaluation report records answers and distances but not elapsed time, so I cannot yet determine whether all five questions finished within 10 seconds. |
+| 1 |  |  |  |
+| 2 |  |  |  |
+| 3 |  |  |  |
+| 4 |  |  |  |
+| 5 |  |  |  |
 
 ## Diagnoses
 
