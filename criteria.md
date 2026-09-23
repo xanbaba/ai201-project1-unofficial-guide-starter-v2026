@@ -53,6 +53,12 @@ in at least 4 of 5 tries.
 <!-- What did your distances look like when you set the cutoff in Milestone 4?
      Was there a clean gap, or did the two groups overlap? -->
 
+My in-corpus questions had best distances from 0.254 to 0.583, while the
+out-of-corpus questions ranged from 0.810 to 0.929. The gap supported the
+0.60 cutoff. I chose 4 of 5 rather than requiring every question to be
+refused because an unrelated question can still share words or a broad topic
+with a student-advice thread and produce one close semantic match.
+
 ---
 
 ## 4. Every chunk retains its thread question
@@ -69,6 +75,9 @@ in at least 4 of 5 tries.
        - "No chunk is shorter than 200 characters, since anything below that
           in my corpus turned out to be a heading with no content under it." -->
 Every chunk begins with the `THREAD: question from its source document`
+
+> **Clarification:** `THREAD:` means the exact thread-question line from the
+> source document. This clarification does not change the original criterion.
 
 
 **Why this target:**
@@ -93,7 +102,11 @@ For each of my five test questions, with the advice_threads index already built 
 
 **Why this target:**
 
-The corpus has only 26 indexed chunks, so loading, chunking, embedding, and retrieval are not repeated for each question. The main variable is one Gemini answer-generation call; 10 seconds is short enough for an interactive question-answering tool while allowing ordinary model-response variation.
+The custom chunker produces 42 indexed chunks, but loading, chunking, and
+embedding are not repeated for each question. Retrieval searches only the top
+3 chunks, so the main variable is one Gemini answer-generation call. Ten
+seconds is short enough for an interactive question-answering tool while
+allowing ordinary model-response variation.
 
 ---
 

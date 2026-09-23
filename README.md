@@ -127,14 +127,22 @@ Room changes happen at the semester boundary almost always, and mid-semester onl
 <!-- One complete question and answer, pasted as text, with the source line
      visible. Milestone 4. -->
 
-**Question:**
+**Question:** Can I change my meal plan?
 
 **Answer:**
 
 ```
+Yes, you can change your meal plan, but you can only change it once and only within the first ten days (thread_meal_plan_tier.txt).
+
+Sources retrieved: thread_commuting.txt, thread_meal_plan_tier.txt
 ```
 
-**My relevance cutoff:**
+**My relevance cutoff:** 0.60
+
+My five in-corpus questions had best distances from 0.254 to 0.583. The five
+out-of-corpus questions ranged from 0.810 to 0.929. There was a gap between
+0.583 and 0.810, so I chose 0.60: it is above every in-corpus result but below
+every unrelated result.
 
 <!-- The number you set in config.py, and how you got there.
 
@@ -147,7 +155,16 @@ Room changes happen at the semester boundary almost always, and mid-semester onl
 
 | Question | In corpus? | Best distance |
 |---|---|---|
-|  |  |  |
+| What to do if I cannot finish my assignment by deadline? | Yes | 0.478 |
+| What study spots do you know that have good coffee nearby? | Yes | 0.426 |
+| I want to transfer credits for my major. My department agreed verbally. | Yes | 0.254 |
+| Can I change my meal plan? | Yes | 0.414 |
+| When does library close | Yes | 0.583 |
+| What is the capital of Mongolia? | No | 0.929 |
+| How do I change the oil in a diesel engine? | No | 0.912 |
+| Who won the 1994 World Cup? | No | 0.917 |
+| What is the recommended dosage of ibuprofen for a headache? | No | 0.810 |
+| How do I write a for loop in Rust? | No | 0.871 |
 
 ## How I Used AI
 
