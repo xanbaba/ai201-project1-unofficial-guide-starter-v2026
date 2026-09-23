@@ -21,6 +21,14 @@
 
 ## What This Does
 
+This project is an unofficial question-answering guide built from the
+`advice_threads` corpus of student-advice discussions. It answers focused
+questions about topics such as deadlines, study spaces, transfer credits, meal
+plans, and library hours by retrieving relevant thread chunks first. The system
+refuses unrelated questions when no retrieved chunk is close enough, rather
+than asking the model to guess. When it does answer, it uses the retrieved
+thread text and names the source document.
+
 <!-- Three or four sentences. Which corpus you picked, and the kinds of
      questions your system answers. Write it for someone who has never seen
      this repo.
@@ -177,9 +185,20 @@ every unrelated result.
 
      Milestone 5. -->
 
-**1.**
+**1.** I asked Codex whether the model receives one retrieved chunk or all
+retrieved chunks, and how the relevance cutoff affects that decision. It
+explained that retrieval returns the top-k chunks and the cutoff is a gate: if
+the closest result passes, the model receives all retrieved chunks. I used that
+explanation when testing retrieval and set `TOP_K = 3` so the model receives a
+small, focused set of chunks.
 
-**2.**
+**2.** I asked Codex how to adapt chunking to reply-based advice threads and
+whether each later chunk should retain the original thread question. It
+inspected several threads, found that replies average about 122 characters,
+and showed that the starter's fixed windows produced a 2-character fragment.
+I changed `split_documents` to keep whole replies together up to 500
+characters, repeat the `THREAD:` question in every chunk, and retain one
+sentence of prior context in continuation chunks.
 
 <!-- ── Stretch features ─────────────────────────────────────────────────────
      Doing one? Say so here BEFORE you start. A feature this README never
