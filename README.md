@@ -521,34 +521,138 @@ original criteria. No system improvement has been made in Milestone 3.
 
 ## The Improvement
 
-**What I changed:**
+**What I changed:** I added one rule to
+`generate.py::GROUNDING_INSTRUCTION`, used by
+`generate.py::answer_from_chunks`:
 
-**Why I picked it:**
+```text
+- When summarizing advice, preserve the relevant conditions, restrictions, and qualifications stated in the documents, including policy-dependent exceptions; do not present qualified advice as a universal rule.
+```
 
-<!-- Connect it to a specific diagnosis above in one sentence. If you can't,
-     you picked a fix because it sounded impressive. -->
+**Why I picked it:** The Milestone 3 diagnosis found that generation omitted
+the instructor-specific syllabus qualification even though retrieval supplied
+it, so I asked the model to preserve relevant qualifications when summarizing.
+The rule applies to advice generally and does not inject the test questions'
+expected answers into the prompt.
+
+Before evaluating, I considered why this might fail: the model still decides
+which qualifications are relevant, and a general instruction may not make it
+select the syllabus detail. The extra instruction could also produce longer
+answers without improving coverage. I tested this single rule without changing
+the model, corpus, index, chunking, top-k, relevance cutoff, test questions, or
+acceptance criteria.
 
 ### Run Log — After
 
-<!-- Same format, same five criteria, three runs each.
-     `python run_eval.py --label after` -->
+Measured on October 4, 2026 (America/New_York), using
+`.venv\Scripts\python.exe tools/milestone1_eval.py --label after`.
+The wrapper invokes `run_eval.py::main` with `--label after`, runs each of the
+five questions three times with caching disabled, measures the same
+`run_eval.py::run_once` boundary as before, and audits all 42 existing indexed
+chunks three times. I added label selection to the measurement wrapper so it
+saves separate after evidence and refuses to overwrite either result set;
+this is measurement support, not another pipeline improvement.
+
+Evidence: [full after answers and gate output](results/run_2026-10-04_1557_after.md)
+and [after retrievals, timings, full chunk audits, and exact prompt](results/milestone4_after_evidence.json).
+The session recorded 15 model calls, 7,802 tokens (7,188 input and 614 output),
+and no cache hits. The original before files remain intact. All 15 retrieved
+result sets and in-corpus gate decisions matched their corresponding baseline
+trials exactly; the out-of-corpus distances and refusals also matched.
 
 | Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
 |---|---|---|---|---|---|
-| 1. Retrieved chunk contains the answer | 4 of 5 |  |  |  |  |
-| 2. Every answer names a source | 5 of 5 |  |  |  |  |
-| 3. Gate stops out-of-corpus questions | 4 of 5 |  |  |  |  |
-| 4. | | | | | |
-| 5. | | | | | |
+| 1. Retrieved chunks contain the answer | At least 4 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 2. Every answer names a source | 5 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 3. Gate stops out-of-corpus questions | At least 4 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 4. Every chunk retains its exact source thread question | All 42 chunks | 42/42 | 42/42 | 42/42 | MET |
+| 5. The complete workflow is fast | Every question within 10 seconds | 5/5 | 5/5 | 4/5 | MISSED |
 
-**Did it help?**
+The retrieved chunks still contain the answer for every question, and all 15
+generated answers name a retrieved document in their own text. The gate again
+refused all five out-of-corpus questions in its prescribed deterministic pass;
+that single measurement is repeated in all three columns. All 42 indexed
+headings matched their source question in every audit. Criterion 5 is MISSED
+because the deadline question's third call took 69.916947 seconds: two passing
+runs do not compensate for one run below the required 5/5.
 
-<!-- Say plainly whether it did, and how you know. If it made things worse,
-     say that — a change that backfired, honestly reported, earns full credit
-     and is more interesting than one that worked. What matters is that you can
-     tell.
+| Question topic | Run 1 (seconds) | Run 2 (seconds) | Run 3 (seconds) |
+|---|---|---|---|
+| Assignment deadline | 2.159770 | 0.702828 | 69.916947 |
+| Study spot with coffee | 0.750037 | 0.659059 | 0.553682 |
+| Verbal transfer-credit approval | 0.687840 | 0.493253 | 0.731736 |
+| Meal-plan change | 0.628415 | 0.845569 | 0.645126 |
+| Library closing time | 0.520271 | 0.640808 | 0.584204 |
 
-     Milestone 4. -->
+Actual slow-call console output from the measurement wrapper:
+
+```text
+  elapsed: 69.916947 seconds
+  run 3: —  (best distance 0.4775)
+```
+
+### Before and after side by side
+
+The original Milestone 1 log above and the after log use the same five targets.
+This comparison repeats both sets of counts to make the change visible:
+
+| Criterion | Original target | Before R1 | Before R2 | Before R3 | After R1 | After R2 | After R3 | Verdict before → after |
+|---|---|---|---|---|---|---|---|---|
+| 1. Retrieved chunks contain the answer | At least 4 of 5 | 5/5 | 5/5 | 5/5 | 5/5 | 5/5 | 5/5 | MET → MET |
+| 2. Every answer names a source | 5 of 5 | 5/5 | 5/5 | 5/5 | 5/5 | 5/5 | 5/5 | MET → MET |
+| 3. Gate stops out-of-corpus questions | At least 4 of 5 | 5/5 | 5/5 | 5/5 | 5/5 | 5/5 | 5/5 | MET → MET |
+| 4. Every chunk retains its exact source thread question | All 42 chunks | 42/42 | 42/42 | 42/42 | 42/42 | 42/42 | 42/42 | MET → MET |
+| 5. The complete workflow is fast | Every question within 10 seconds | 5/5 | 5/5 | 5/5 | 5/5 | 5/5 | 4/5 | MET → MISSED |
+
+**Did it help?** It did not fix the diagnosed syllabus omission (0/3 answers
+included it before and 0/3 after), and the after evaluation additionally missed
+the original speed target because one response took 69.9 seconds.
+
+There was one narrower positive observation: the café's “before 10am”
+qualification appeared in 1/3 baseline café answers and 3/3 after answers.
+That is an additional qualitative check of the intended prompt behavior,
+not a new acceptance criterion or a reason to call the overall change a
+success. The original source-naming criterion still scores 5/5 per run even
+when important details are omitted.
+
+Actual café answers, run 1, produced by `generate.py::answer_from_chunks`
+and saved in the respective before and after reports:
+
+**Before:**
+
+```text
+Ridgeway Café is mentioned as a study spot that has good coffee.
+
+Source: thread_study_spots.txt
+```
+
+**After:**
+
+```text
+Based on the provided documents, Ridgeway Café is recommended as a study spot with good coffee, provided you go before 10am.
+
+Source: `thread_study_spots.txt`
+```
+
+Actual deadline answer after the change, run 3:
+
+```text
+You should ask before the deadline rather than after, as almost everyone will give you two days if you ask beforehand, but almost nobody will on the following Monday (thread_late_work.txt). Additionally, if you need to adjust individual grades for a group project where someone disappears, you must raise the issue before the deadline rather than after (thread_group_project.txt).
+```
+
+The deadline answers still select extension advice and omit the
+instructor-dependent policy; two after answers also include group-project
+advice. This supports the diagnosis that the general prompt instruction did
+not reliably control which qualifications generation selected.
+
+The new speed miss is a long end-to-end call, but the captured timings do not
+separate retrieval time from service time. Identical retrieval results and the
+absence of a rate-limit warning do not prove why it took so long. I cannot
+attribute the delay to the prompt rather than model-service or network
+variation from one before/after evaluation. It remains a measured failure,
+with the long trial preserved rather than discarded. I kept the tested prompt
+change and made no second improvement or replacement evaluation in this
+milestone.
 
 ## What's Still Broken
 

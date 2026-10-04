@@ -1,11 +1,13 @@
-"""Capture baseline evidence without changing the question-answering pipeline.
+"""Capture evaluation evidence without changing the question-answering pipeline.
 
 Run from the repository root: .venv\Scripts\python.exe tools/milestone1_eval.py
+Pass --label after to measure an improvement separately from the baseline.
 The standard run_eval report is also produced, with three uncached answers per
 question. This companion records the full retrievals, exact run_once timings,
 and three read-only audits of every chunk in the existing index.
 """
 
+import argparse
 import datetime as dt
 import json
 from pathlib import Path
@@ -46,15 +48,20 @@ def audit_chunks():
 
 
 def main():
-    path = config.RESULTS_DIR / "milestone1_before_evidence.json"
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--label", choices=["before", "after"], default="before")
+    args = parser.parse_args()
+    filename = "milestone1_before_evidence.json" if args.label == "before" else "milestone4_after_evidence.json"
+    path = config.RESULTS_DIR / filename
     if path.exists():
-        raise FileExistsError(f"Preserve existing baseline evidence: {path}")
-    assert store.index_exists(), "Baseline requires the existing index"
+        raise FileExistsError(f"Preserve existing evaluation evidence: {path}")
+    assert store.index_exists(), "Evaluation requires the existing index"
     evidence = {
         "started_at_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
         "corpus": config.CORPUS, "model": config.MODEL,
         "embedding_model": config.EMBEDDING_MODEL,
         "top_k": config.TOP_K, "threshold": config.THRESHOLD,
+        "label": args.label, "grounding_instruction": generate.GROUNDING_INSTRUCTION,
         "cache": False, "trials": [], "chunk_audits": [],
     }
 
@@ -80,7 +87,7 @@ def main():
         return answer, results, decision
 
     run_eval.run_once = measured_run_once
-    sys.argv = ["run_eval.py", "--label", "before"]
+    sys.argv = ["run_eval.py", "--label", args.label]
     try:
         run_eval.main()
     finally:

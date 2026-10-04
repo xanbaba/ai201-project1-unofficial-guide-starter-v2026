@@ -1,0 +1,1556 @@
+{
+  "started_at_utc": "2026-10-04T19:56:11.547138+00:00",
+  "corpus": "advice_threads",
+  "model": "gemini-3.5-flash-lite",
+  "embedding_model": "all-MiniLM-L6-v2",
+  "top_k": 3,
+  "threshold": 0.6,
+  "label": "after",
+  "grounding_instruction": "You answer questions using only the documents provided to you.\n\nRules:\n- Use only the information in the documents below. Do not use anything you know from elsewhere.\n- If the documents don't cover the question, say you don't have enough information. Do not guess.\n- Name the document your answer came from, using the filename given in each excerpt.\n- When summarizing advice, preserve the relevant conditions, restrictions, and qualifications stated in the documents, including policy-dependent exceptions; do not present qualified advice as a universal rule.\n- Be brief. Two or three sentences is usually enough.",
+  "cache": false,
+  "trials": [
+    {
+      "question": "What to do if I cannot finish my assignment by deadline?",
+      "run": 1,
+      "elapsed_seconds": 2.159770100028254,
+      "answer": "You should ask for an extension before the deadline rather than after, as almost everyone will give you two days if you ask beforehand, but almost nobody will after the deadline passes (*thread_late_work.txt*).",
+      "results": [
+        {
+          "text": "THREAD: How do you handle a group project where someone disappears?\n\n--- reply 1 (29 votes) ---\nDocument early. Not to be difficult — because if you go to the instructor in week 10 with nothing written down, there's nothing they can do.\n\n--- reply 2 (22 votes) ---\nMost instructors here will adjust individual grades if you raise it before the deadline rather than after. After is too late, consistently.",
+          "source": "thread_group_project.txt",
+          "label": "thread_group_project.txt#0",
+          "distance": 0.47752487090890194,
+          "produced_by": "chunker.py::split_documents"
+        },
+        {
+          "text": "THREAD: What do you wish you'd known in first year?\n\n--- reply 1 (41 votes) ---\nThat the add/drop deadline and the withdrawal deadline are different dates and only one of them is on the calendar everyone reads.\n\n--- reply 2 (28 votes) ---\nThat you can take a course pass/fail and declare it late — up to week eight. I carried a grade I didn't need to.",
+          "source": "thread_first_year_regret.txt",
+          "label": "thread_first_year_regret.txt#0",
+          "distance": 0.49264811251892904,
+          "produced_by": "chunker.py::split_documents"
+        },
+        {
+          "text": "THREAD: What actually happens if you hand something in late?\n\n--- reply 1 (20 votes) ---\nEntirely instructor-dependent and the syllabus is accurate. If it says 10% a day, it's 10% a day.\n\n--- reply 2 (47 votes) ---\nThe universal rule: ask before the deadline, not after. Almost everyone will give you two days if you ask on Wednesday for a Friday deadline. Almost nobody will on the following Monday.",
+          "source": "thread_late_work.txt",
+          "label": "thread_late_work.txt#0",
+          "distance": 0.5916892936103177,
+          "produced_by": "chunker.py::split_documents"
+        }
+      ],
+      "decision": {
+        "passed": true,
+        "best_distance": 0.47752487090890194,
+        "threshold": 0.6
+      }
+    },
+    {
+      "question": "What to do if I cannot finish my assignment by deadline?",
+      "run": 2,
+      "elapsed_seconds": 0.7028280000085942,
+      "answer": "You should ask before the deadline rather than after, as almost everyone will give you two days if you ask beforehand, but almost nobody will after the deadline passes (thread_late_work.txt). Additionally, for group projects, instructors will typically adjust individual grades if you raise issues before the deadline rather than after (thread_group_project.txt).",
+      "results": [
+        {
+          "text": "THREAD: How do you handle a group project where someone disappears?\n\n--- reply 1 (29 votes) ---\nDocument early. Not to be difficult — because if you go to the instructor in week 10 with nothing written down, there's nothing they can do.\n\n--- reply 2 (22 votes) ---\nMost instructors here will adjust individual grades if you raise it before the deadline rather than after. After is too late, consistently.",
+          "source": "thread_group_project.txt",
+          "label": "thread_group_project.txt#0",
+          "distance": 0.47752487090890194,
+          "produced_by": "chunker.py::split_documents"
+        },
+        {
+          "text": "THREAD: What do you wish you'd known in first year?\n\n--- reply 1 (41 votes) ---\nThat the add/drop deadline and the withdrawal deadline are different dates and only one of them is on the calendar everyone reads.\n\n--- reply 2 (28 votes) ---\nThat you can take a course pass/fail and declare it late — up to week eight. I carried a grade I didn't need to.",
+          "source": "thread_first_year_regret.txt",
+          "label": "thread_first_year_regret.txt#0",
+          "distance": 0.49264811251892904,
+          "produced_by": "chunker.py::split_documents"
+        },
+        {
+          "text": "THREAD: What actually happens if you hand something in late?\n\n--- reply 1 (20 votes) ---\nEntirely instructor-dependent and the syllabus is accurate. If it says 10% a day, it's 10% a day.\n\n--- reply 2 (47 votes) ---\nThe universal rule: ask before the deadline, not after. Almost everyone will give you two days if you ask on Wednesday for a Friday deadline. Almost nobody will on the following Monday.",
+          "source": "thread_late_work.txt",
+          "label": "thread_late_work.txt#0",
+          "distance": 0.5916892936103177,
+          "produced_by": "chunker.py::split_documents"
+        }
+      ],
+      "decision": {
+        "passed": true,
+        "best_distance": 0.47752487090890194,
+        "threshold": 0.6
+      }
+    },
+    {
+      "question": "What to do if I cannot finish my assignment by deadline?",
+      "run": 3,
+      "elapsed_seconds": 69.91694700001972,
+      "answer": "You should ask before the deadline rather than after, as almost everyone will give you two days if you ask beforehand, but almost nobody will on the following Monday (thread_late_work.txt). Additionally, if you need to adjust individual grades for a group project where someone disappears, you must raise the issue before the deadline rather than after (thread_group_project.txt).",
+      "results": [
+        {
+          "text": "THREAD: How do you handle a group project where someone disappears?\n\n--- reply 1 (29 votes) ---\nDocument early. Not to be difficult — because if you go to the instructor in week 10 with nothing written down, there's nothing they can do.\n\n--- reply 2 (22 votes) ---\nMost instructors here will adjust individual grades if you raise it before the deadline rather than after. After is too late, consistently.",
+          "source": "thread_group_project.txt",
+          "label": "thread_group_project.txt#0",
+          "distance": 0.47752487090890194,
+          "produced_by": "chunker.py::split_documents"
+        },
+        {
+          "text": "THREAD: What do you wish you'd known in first year?\n\n--- reply 1 (41 votes) ---\nThat the add/drop deadline and the withdrawal deadline are different dates and only one of them is on the calendar everyone reads.\n\n--- reply 2 (28 votes) ---\nThat you can take a course pass/fail and declare it late — up to week eight. I carried a grade I didn't need to.",
+          "source": "thread_first_year_regret.txt",
+          "label": "thread_first_year_regret.txt#0",
+          "distance": 0.49264811251892904,
+          "produced_by": "chunker.py::split_documents"
+        },
+        {
+          "text": "THREAD: What actually happens if you hand something in late?\n\n--- reply 1 (20 votes) ---\nEntirely instructor-dependent and the syllabus is accurate. If it says 10% a day, it's 10% a day.\n\n--- reply 2 (47 votes) ---\nThe universal rule: ask before the deadline, not after. Almost everyone will give you two days if you ask on Wednesday for a Friday deadline. Almost nobody will on the following Monday.",
+          "source": "thread_late_work.txt",
+          "label": "thread_late_work.txt#0",
+          "distance": 0.5916892936103177,
+          "produced_by": "chunker.py::split_documents"
+        }
+      ],
+      "decision": {
+        "passed": true,
+        "best_distance": 0.47752487090890194,
+        "threshold": 0.6
+      }
+    },
+    {
+      "question": "What study spots do you know that have good coffee nearby?",
+      "run": 1,
+      "elapsed_seconds": 0.7500370999914594,
+      "answer": "Based on the provided documents, Ridgeway Café is recommended as a study spot with good coffee, provided you go before 10am. \n\nSource: `thread_study_spots.txt`",
+      "results": [
+        {
+          "text": "THREAD: Best study spots that aren't the library?\n\n--- reply 1 (23 votes) ---\nRidgeway Café before 10am. Empty, quiet, good coffee, and they don't push you out.\n\n--- reply 2 (19 votes) ---\nThe science building has open lounges on floors 2 through 5 that are unlocked and almost always empty.\n\n--- reply 3 (14 votes) ---\nDepends what you need. If you need silence, the library third floor is the only place that reliably delivers it.",
+          "source": "thread_study_spots.txt",
+          "label": "thread_study_spots.txt#0",
+          "distance": 0.4259198406533746,
+          "produced_by": "chunker.py::split_documents"
+        },
+        {
+          "text": "THREAD: Best study spots that aren't the library?\n\nPrevious context: If you need silence, the library third floor is the only place that reliably delivers it.\n\n--- reply 4 (9 votes) ---\nThe group study rooms in the library can be booked by one person and used alone. Nobody checks.",
+          "source": "thread_study_spots.txt",
+          "label": "thread_study_spots.txt#1",
+          "distance": 0.5105401660125708,
+          "produced_by": "chunker.py::split_documents"
+        },
+        {
+          "text": "THREAD: Anything specific for first-generation students?\n\nPrevious context: People are happy to explain them and nobody volunteers them.\n\n--- reply 3 (16 votes) ---\nEmergency fund for textbooks and travel exists and is not means-tested beyond a short form.",
+          "source": "thread_first_gen.txt",
+          "label": "thread_first_gen.txt#1",
+          "distance": 0.7683322277876249,
+          "produced_by": "chunker.py::split_documents"
+        }
+      ],
+      "decision": {
+        "passed": true,
+        "best_distance": 0.4259198406533746,
+        "threshold": 0.6
+      }
+    },
+    {
+      "question": "What study spots do you know that have good coffee nearby?",
+      "run": 2,
+      "elapsed_seconds": 0.6590590999694541,
+      "answer": "Based on the provided documents, Ridgeway Café is recommended as a study spot with good coffee, provided you go before 10am (thread_study_spots.txt).",
+      "results": [
+        {
+          "text": "THREAD: Best study spots that aren't the library?\n\n--- reply 1 (23 votes) ---\nRidgeway Café before 10am. Empty, quiet, good coffee, and they don't push you out.\n\n--- reply 2 (19 votes) ---\nThe science building has open lounges on floors 2 through 5 that are unlocked and almost always empty.\n\n--- reply 3 (14 votes) ---\nDepends what you need. If you need silence, the library third floor is the only place that reliably delivers it.",
+          "source": "thread_study_spots.txt",
+          "label": "thread_study_spots.txt#0",
+          "distance": 0.4259198406533746,
+          "produced_by": "chunker.py::split_documents"
+        },
+        {
+          "text": "THREAD: Best study spots that aren't the library?\n\nPrevious context: If you need silence, the library third floor is the only place that reliably delivers it.\n\n--- reply 4 (9 votes) ---\nThe group study rooms in the library can be booked by one person and used alone. Nobody checks.",
+          "source": "thread_study_spots.txt",
+          "label": "thread_study_spots.txt#1",
+          "distance": 0.5105401660125708,
+          "produced_by": "chunker.py::split_documents"
+        },
+        {
+          "text": "THREAD: Anything specific for first-generation students?\n\nPrevious context: People are happy to explain them and nobody volunteers them.\n\n--- reply 3 (16 votes) ---\nEmergency fund for textbooks and travel exists and is not means-tested beyond a short form.",
+          "source": "thread_first_gen.txt",
+          "label": "thread_first_gen.txt#1",
+          "distance": 0.7683322277876249,
+          "produced_by": "chunker.py::split_documents"
+        }
+      ],
+      "decision": {
+        "passed": true,
+        "best_distance": 0.4259198406533746,
+        "threshold": 0.6
+      }
+    },
+    {
+      "question": "What study spots do you know that have good coffee nearby?",
+      "run": 3,
+      "elapsed_seconds": 0.5536824999726377,
+      "answer": "Ridgeway Café is recommended as a study spot that has good coffee, provided you go before 10am (Source: thread_study_spots.txt).",
+      "results": [
+        {
+          "text": "THREAD: Best study spots that aren't the library?\n\n--- reply 1 (23 votes) ---\nRidgeway Café before 10am. Empty, quiet, good coffee, and they don't push you out.\n\n--- reply 2 (19 votes) ---\nThe science building has open lounges on floors 2 through 5 that are unlocked and almost always empty.\n\n--- reply 3 (14 votes) ---\nDepends what you need. If you need silence, the library third floor is the only place that reliably delivers it.",
+          "source": "thread_study_spots.txt",
+          "label": "thread_study_spots.txt#0",
+          "distance": 0.4259198406533746,
+          "produced_by": "chunker.py::split_documents"
+        },
+        {
+          "text": "THREAD: Best study spots that aren't the library?\n\nPrevious context: If you need silence, the library third floor is the only place that reliably delivers it.\n\n--- reply 4 (9 votes) ---\nThe group study rooms in the library can be booked by one person and used alone. Nobody checks.",
+          "source": "thread_study_spots.txt",
+          "label": "thread_study_spots.txt#1",
+          "distance": 0.5105401660125708,
+          "produced_by": "chunker.py::split_documents"
+        },
+        {
+          "text": "THREAD: Anything specific for first-generation students?\n\nPrevious context: People are happy to explain them and nobody volunteers them.\n\n--- reply 3 (16 votes) ---\nEmergency fund for textbooks and travel exists and is not means-tested beyond a short form.",
+          "source": "thread_first_gen.txt",
+          "label": "thread_first_gen.txt#1",
+          "distance": 0.7683322277876249,
+          "produced_by": "chunker.py::split_documents"
+        }
+      ],
+      "decision": {
+        "passed": true,
+        "best_distance": 0.4259198406533746,
+        "threshold": 0.6
+      }
+    },
+    {
+      "question": "I want to transfer credits for my major. My department agreed verbally.",
+      "run": 1,
+      "elapsed_seconds": 0.6878398999688216,
+      "answer": "You should get the agreement in writing from the department before relying on it, because a verbal agreement might not survive a staff change (thread_transfer_credits.txt).",
+      "results": [
+        {
+          "text": "THREAD: Do transfer credits actually count toward the major?\n\n--- reply 1 (20 votes) ---\nToward general requirements almost always. Toward the major it's case-by-case and the department decides, not the registrar.\n\n--- reply 2 (25 votes) ---\nGet it in writing from the department before you rely on it. I had a verbal yes that didn't survive a staff change.",
+          "source": "thread_transfer_credits.txt",
+          "label": "thread_transfer_credits.txt#0",
+          "distance": 0.25380169111071493,
+          "produced_by": "chunker.py::split_documents"
+        },
+        {
+          "text": "THREAD: Do transfer credits actually count toward the major?\n\nPrevious context: I had a verbal yes that didn't survive a staff change.\n\n--- reply 3 (13 votes) ---\nThe credit hours count for registration priority and the housing lottery even when they don't count toward the major, which is worth knowing.",
+          "source": "thread_transfer_credits.txt",
+          "label": "thread_transfer_credits.txt#1",
+          "distance": 0.39769698748385374,
+          "produced_by": "chunker.py::split_documents"
+        },
+        {
+          "text": "THREAD: How hard is it to change major in second year?\n\n--- reply 1 (22 votes) ---\nAdministratively trivial — it's a form. The real question is whether the credits you've taken map onto the new requirements.\n\n--- reply 2 (27 votes) ---\nDepends enormously on the direction. Moving within the sciences is usually fine. Moving into a science from outside in your third year means an extra semester more often than not.",
+          "source": "thread_changing_major.txt",
+          "label": "thread_changing_major.txt#0",
+          "distance": 0.5198502995010674,
+          "produced_by": "chunker.py::split_documents"
+        }
+      ],
+      "decision": {
+        "passed": true,
+        "best_distance": 0.25380169111071493,
+        "threshold": 0.6
+      }
+    },
+    {
+      "question": "I want to transfer credits for my major. My department agreed verbally.",
+      "run": 2,
+      "elapsed_seconds": 0.4932530000223778,
+      "answer": "You should get it in writing from the department before relying on their agreement, as a verbal yes may not survive a staff change (thread_transfer_credits.txt).",
+      "results": [
+        {
+          "text": "THREAD: Do transfer credits actually count toward the major?\n\n--- reply 1 (20 votes) ---\nToward general requirements almost always. Toward the major it's case-by-case and the department decides, not the registrar.\n\n--- reply 2 (25 votes) ---\nGet it in writing from the department before you rely on it. I had a verbal yes that didn't survive a staff change.",
+          "source": "thread_transfer_credits.txt",
+          "label": "thread_transfer_credits.txt#0",
+          "distance": 0.25380169111071493,
+          "produced_by": "chunker.py::split_documents"
+        },
+        {
+          "text": "THREAD: Do transfer credits actually count toward the major?\n\nPrevious context: I had a verbal yes that didn't survive a staff change.\n\n--- reply 3 (13 votes) ---\nThe credit hours count for registration priority and the housing lottery even when they don't count toward the major, which is worth knowing.",
+          "source": "thread_transfer_credits.txt",
+          "label": "thread_transfer_credits.txt#1",
+          "distance": 0.39769698748385374,
+          "produced_by": "chunker.py::split_documents"
+        },
+        {
+          "text": "THREAD: How hard is it to change major in second year?\n\n--- reply 1 (22 votes) ---\nAdministratively trivial — it's a form. The real question is whether the credits you've taken map onto the new requirements.\n\n--- reply 2 (27 votes) ---\nDepends enormously on the direction. Moving within the sciences is usually fine. Moving into a science from outside in your third year means an extra semester more often than not.",
+          "source": "thread_changing_major.txt",
+          "label": "thread_changing_major.txt#0",
+          "distance": 0.5198502995010674,
+          "produced_by": "chunker.py::split_documents"
+        }
+      ],
+      "decision": {
+        "passed": true,
+        "best_distance": 0.25380169111071493,
+        "threshold": 0.6
+      }
+    },
+    {
+      "question": "I want to transfer credits for my major. My department agreed verbally.",
+      "run": 3,
+      "elapsed_seconds": 0.7317360000452027,
+      "answer": "You should get it in writing from the department before relying on their agreement, because a verbal yes may not survive a staff change (thread_transfer_credits.txt). Furthermore, whether transfer credits actually count toward the major is determined case-by-case by the department rather than the registrar (thread_transfer_credits.txt).",
+      "results": [
+        {
+          "text": "THREAD: Do transfer credits actually count toward the major?\n\n--- reply 1 (20 votes) ---\nToward general requirements almost always. Toward the major it's case-by-case and the department decides, not the registrar.\n\n--- reply 2 (25 votes) ---\nGet it in writing from the department before you rely on it. I had a verbal yes that didn't survive a staff change.",
+          "source": "thread_transfer_credits.txt",
+          "label": "thread_transfer_credits.txt#0",
+          "distance": 0.25380169111071493,
+          "produced_by": "chunker.py::split_documents"
+        },
+        {
+          "text": "THREAD: Do transfer credits actually count toward the major?\n\nPrevious context: I had a verbal yes that didn't survive a staff change.\n\n--- reply 3 (13 votes) ---\nThe credit hours count for registration priority and the housing lottery even when they don't count toward the major, which is worth knowing.",
+          "source": "thread_transfer_credits.txt",
+          "label": "thread_transfer_credits.txt#1",
+          "distance": 0.39769698748385374,
+          "produced_by": "chunker.py::split_documents"
+        },
+        {
+          "text": "THREAD: How hard is it to change major in second year?\n\n--- reply 1 (22 votes) ---\nAdministratively trivial — it's a form. The real question is whether the credits you've taken map onto the new requirements.\n\n--- reply 2 (27 votes) ---\nDepends enormously on the direction. Moving within the sciences is usually fine. Moving into a science from outside in your third year means an extra semester more often than not.",
+          "source": "thread_changing_major.txt",
+          "label": "thread_changing_major.txt#0",
+          "distance": 0.5198502995010674,
+          "produced_by": "chunker.py::split_documents"
+        }
+      ],
+      "decision": {
+        "passed": true,
+        "best_distance": 0.25380169111071493,
+        "threshold": 0.6
+      }
+    },
+    {
+      "question": "Can I change my meal plan?",
+      "run": 1,
+      "elapsed_seconds": 0.6284149000421166,
+      "answer": "Yes, you can change your meal plan, but you are restricted to changing it only once and only within the first ten days (thread_meal_plan_tier.txt).",
+      "results": [
+        {
+          "text": "THREAD: Which meal plan tier is right?\n\nPrevious context: The highest tier only makes sense if you eat three meals a day in the halls every single day, which basically nobody does past October.\n\n--- reply 3 (11 votes) ---\nRemember you can only change it once and only in the first ten days. I waited and got stuck on a plan I didn't use.\n\n--- reply 4 (7 votes) ---\nDeclining balance rolls within the semester but not between them. Spend it in December or lose it.",
+          "source": "thread_meal_plan_tier.txt",
+          "label": "thread_meal_plan_tier.txt#1",
+          "distance": 0.41365541723665333,
+          "produced_by": "chunker.py::split_documents"
+        },
+        {
+          "text": "THREAD: Which meal plan tier is right?\n\n--- reply 1 (24 votes) ---\nDepends entirely on whether your building has a kitchen. Fenwick has kitchenettes, so people there go down a tier and cook two or three nights. Everywhere else, get the middle tier.\n\n--- reply 2 (19 votes) ---\nThe highest tier only makes sense if you eat three meals a day in the halls every single day, which basically nobody does past October.",
+          "source": "thread_meal_plan_tier.txt",
+          "label": "thread_meal_plan_tier.txt#0",
+          "distance": 0.5225898376455314,
+          "produced_by": "chunker.py::split_documents"
+        },
+        {
+          "text": "THREAD: Commuting an hour each way — is it survivable?\n\n--- reply 1 (26 votes) ---\nYes, but stack your courses. Three long days beats five short ones by a wide margin.\n\n--- reply 2 (21 votes) ---\nThe commuter lounge in the student centre has lockers you can rent for $20 a year and it changes the experience completely.\n\n--- reply 3 (13 votes) ---\nWatch the evening bus timetable before you register for anything that ends after 6pm.",
+          "source": "thread_commuting.txt",
+          "label": "thread_commuting.txt#0",
+          "distance": 0.810327268446216,
+          "produced_by": "chunker.py::split_documents"
+        }
+      ],
+      "decision": {
+        "passed": true,
+        "best_distance": 0.41365541723665333,
+        "threshold": 0.6
+      }
+    },
+    {
+      "question": "Can I change my meal plan?",
+      "run": 2,
+      "elapsed_seconds": 0.845569199998863,
+      "answer": "Yes, you can change your meal plan, but you can only change it once and only in the first ten days (thread_meal_plan_tier.txt).",
+      "results": [
+        {
+          "text": "THREAD: Which meal plan tier is right?\n\nPrevious context: The highest tier only makes sense if you eat three meals a day in the halls every single day, which basically nobody does past October.\n\n--- reply 3 (11 votes) ---\nRemember you can only change it once and only in the first ten days. I waited and got stuck on a plan I didn't use.\n\n--- reply 4 (7 votes) ---\nDeclining balance rolls within the semester but not between them. Spend it in December or lose it.",
+          "source": "thread_meal_plan_tier.txt",
+          "label": "thread_meal_plan_tier.txt#1",
+          "distance": 0.41365541723665333,
+          "produced_by": "chunker.py::split_documents"
+        },
+        {
+          "text": "THREAD: Which meal plan tier is right?\n\n--- reply 1 (24 votes) ---\nDepends entirely on whether your building has a kitchen. Fenwick has kitchenettes, so people there go down a tier and cook two or three nights. Everywhere else, get the middle tier.\n\n--- reply 2 (19 votes) ---\nThe highest tier only makes sense if you eat three meals a day in the halls every single day, which basically nobody does past October.",
+          "source": "thread_meal_plan_tier.txt",
+          "label": "thread_meal_plan_tier.txt#0",
+          "distance": 0.5225898376455314,
+          "produced_by": "chunker.py::split_documents"
+        },
+        {
+          "text": "THREAD: Commuting an hour each way — is it survivable?\n\n--- reply 1 (26 votes) ---\nYes, but stack your courses. Three long days beats five short ones by a wide margin.\n\n--- reply 2 (21 votes) ---\nThe commuter lounge in the student centre has lockers you can rent for $20 a year and it changes the experience completely.\n\n--- reply 3 (13 votes) ---\nWatch the evening bus timetable before you register for anything that ends after 6pm.",
+          "source": "thread_commuting.txt",
+          "label": "thread_commuting.txt#0",
+          "distance": 0.810327268446216,
+          "produced_by": "chunker.py::split_documents"
+        }
+      ],
+      "decision": {
+        "passed": true,
+        "best_distance": 0.41365541723665333,
+        "threshold": 0.6
+      }
+    },
+    {
+      "question": "Can I change my meal plan?",
+      "run": 3,
+      "elapsed_seconds": 0.6451256000436842,
+      "answer": "Yes, you can change your meal plan, but you can only change it once and only within the first ten days (thread_meal_plan_tier.txt).",
+      "results": [
+        {
+          "text": "THREAD: Which meal plan tier is right?\n\nPrevious context: The highest tier only makes sense if you eat three meals a day in the halls every single day, which basically nobody does past October.\n\n--- reply 3 (11 votes) ---\nRemember you can only change it once and only in the first ten days. I waited and got stuck on a plan I didn't use.\n\n--- reply 4 (7 votes) ---\nDeclining balance rolls within the semester but not between them. Spend it in December or lose it.",
+          "source": "thread_meal_plan_tier.txt",
+          "label": "thread_meal_plan_tier.txt#1",
+          "distance": 0.41365541723665333,
+          "produced_by": "chunker.py::split_documents"
+        },
+        {
+          "text": "THREAD: Which meal plan tier is right?\n\n--- reply 1 (24 votes) ---\nDepends entirely on whether your building has a kitchen. Fenwick has kitchenettes, so people there go down a tier and cook two or three nights. Everywhere else, get the middle tier.\n\n--- reply 2 (19 votes) ---\nThe highest tier only makes sense if you eat three meals a day in the halls every single day, which basically nobody does past October.",
+          "source": "thread_meal_plan_tier.txt",
+          "label": "thread_meal_plan_tier.txt#0",
+          "distance": 0.5225898376455314,
+          "produced_by": "chunker.py::split_documents"
+        },
+        {
+          "text": "THREAD: Commuting an hour each way — is it survivable?\n\n--- reply 1 (26 votes) ---\nYes, but stack your courses. Three long days beats five short ones by a wide margin.\n\n--- reply 2 (21 votes) ---\nThe commuter lounge in the student centre has lockers you can rent for $20 a year and it changes the experience completely.\n\n--- reply 3 (13 votes) ---\nWatch the evening bus timetable before you register for anything that ends after 6pm.",
+          "source": "thread_commuting.txt",
+          "label": "thread_commuting.txt#0",
+          "distance": 0.810327268446216,
+          "produced_by": "chunker.py::split_documents"
+        }
+      ],
+      "decision": {
+        "passed": true,
+        "best_distance": 0.41365541723665333,
+        "threshold": 0.6
+      }
+    },
+    {
+      "question": "When does library close",
+      "run": 1,
+      "elapsed_seconds": 0.5202710999874398,
+      "answer": "Based on the provided documents, the library is open until 2am (from thread_sleep_schedule.txt).",
+      "results": [
+        {
+          "text": "THREAD: Best study spots that aren't the library?\n\n--- reply 1 (23 votes) ---\nRidgeway Café before 10am. Empty, quiet, good coffee, and they don't push you out.\n\n--- reply 2 (19 votes) ---\nThe science building has open lounges on floors 2 through 5 that are unlocked and almost always empty.\n\n--- reply 3 (14 votes) ---\nDepends what you need. If you need silence, the library third floor is the only place that reliably delivers it.",
+          "source": "thread_study_spots.txt",
+          "label": "thread_study_spots.txt#0",
+          "distance": 0.5826866400789085,
+          "produced_by": "chunker.py::split_documents"
+        },
+        {
+          "text": "THREAD: Best study spots that aren't the library?\n\nPrevious context: If you need silence, the library third floor is the only place that reliably delivers it.\n\n--- reply 4 (9 votes) ---\nThe group study rooms in the library can be booked by one person and used alone. Nobody checks.",
+          "source": "thread_study_spots.txt",
+          "label": "thread_study_spots.txt#1",
+          "distance": 0.6156041444060031,
+          "produced_by": "chunker.py::split_documents"
+        },
+        {
+          "text": "THREAD: Everyone says fix your sleep. Does it actually matter?\n\n--- reply 1 (29 votes) ---\nYes, and the specific thing that helped me was scheduling no classes before 10am rather than trying to become a morning person.\n\n--- reply 2 (37 votes) ---\nThe library being open until 2am is a trap. It's a resource, not a schedule.\n\n--- reply 3 (16 votes) ---\nCounselling runs a short workshop on this that is more practical than it sounds. Four sessions, and it's free.",
+          "source": "thread_sleep_schedule.txt",
+          "label": "thread_sleep_schedule.txt#0",
+          "distance": 0.6490203264524075,
+          "produced_by": "chunker.py::split_documents"
+        }
+      ],
+      "decision": {
+        "passed": true,
+        "best_distance": 0.5826866400789085,
+        "threshold": 0.6
+      }
+    },
+    {
+      "question": "When does library close",
+      "run": 2,
+      "elapsed_seconds": 0.6408082999987528,
+      "answer": "Based on the provided documents, the library is open until 2am (thread_sleep_schedule.txt).",
+      "results": [
+        {
+          "text": "THREAD: Best study spots that aren't the library?\n\n--- reply 1 (23 votes) ---\nRidgeway Café before 10am. Empty, quiet, good coffee, and they don't push you out.\n\n--- reply 2 (19 votes) ---\nThe science building has open lounges on floors 2 through 5 that are unlocked and almost always empty.\n\n--- reply 3 (14 votes) ---\nDepends what you need. If you need silence, the library third floor is the only place that reliably delivers it.",
+          "source": "thread_study_spots.txt",
+          "label": "thread_study_spots.txt#0",
+          "distance": 0.5826866400789085,
+          "produced_by": "chunker.py::split_documents"
+        },
+        {
+          "text": "THREAD: Best study spots that aren't the library?\n\nPrevious context: If you need silence, the library third floor is the only place that reliably delivers it.\n\n--- reply 4 (9 votes) ---\nThe group study rooms in the library can be booked by one person and used alone. Nobody checks.",
+          "source": "thread_study_spots.txt",
+          "label": "thread_study_spots.txt#1",
+          "distance": 0.6156041444060031,
+          "produced_by": "chunker.py::split_documents"
+        },
+        {
+          "text": "THREAD: Everyone says fix your sleep. Does it actually matter?\n\n--- reply 1 (29 votes) ---\nYes, and the specific thing that helped me was scheduling no classes before 10am rather than trying to become a morning person.\n\n--- reply 2 (37 votes) ---\nThe library being open until 2am is a trap. It's a resource, not a schedule.\n\n--- reply 3 (16 votes) ---\nCounselling runs a short workshop on this that is more practical than it sounds. Four sessions, and it's free.",
+          "source": "thread_sleep_schedule.txt",
+          "label": "thread_sleep_schedule.txt#0",
+          "distance": 0.6490203264524075,
+          "produced_by": "chunker.py::split_documents"
+        }
+      ],
+      "decision": {
+        "passed": true,
+        "best_distance": 0.5826866400789085,
+        "threshold": 0.6
+      }
+    },
+    {
+      "question": "When does library close",
+      "run": 3,
+      "elapsed_seconds": 0.58420419995673,
+      "answer": "Based on the provided documents, the library is open until 2am (thread_sleep_schedule.txt).",
+      "results": [
+        {
+          "text": "THREAD: Best study spots that aren't the library?\n\n--- reply 1 (23 votes) ---\nRidgeway Café before 10am. Empty, quiet, good coffee, and they don't push you out.\n\n--- reply 2 (19 votes) ---\nThe science building has open lounges on floors 2 through 5 that are unlocked and almost always empty.\n\n--- reply 3 (14 votes) ---\nDepends what you need. If you need silence, the library third floor is the only place that reliably delivers it.",
+          "source": "thread_study_spots.txt",
+          "label": "thread_study_spots.txt#0",
+          "distance": 0.5826866400789085,
+          "produced_by": "chunker.py::split_documents"
+        },
+        {
+          "text": "THREAD: Best study spots that aren't the library?\n\nPrevious context: If you need silence, the library third floor is the only place that reliably delivers it.\n\n--- reply 4 (9 votes) ---\nThe group study rooms in the library can be booked by one person and used alone. Nobody checks.",
+          "source": "thread_study_spots.txt",
+          "label": "thread_study_spots.txt#1",
+          "distance": 0.6156041444060031,
+          "produced_by": "chunker.py::split_documents"
+        },
+        {
+          "text": "THREAD: Everyone says fix your sleep. Does it actually matter?\n\n--- reply 1 (29 votes) ---\nYes, and the specific thing that helped me was scheduling no classes before 10am rather than trying to become a morning person.\n\n--- reply 2 (37 votes) ---\nThe library being open until 2am is a trap. It's a resource, not a schedule.\n\n--- reply 3 (16 votes) ---\nCounselling runs a short workshop on this that is more practical than it sounds. Four sessions, and it's free.",
+          "source": "thread_sleep_schedule.txt",
+          "label": "thread_sleep_schedule.txt#0",
+          "distance": 0.6490203264524075,
+          "produced_by": "chunker.py::split_documents"
+        }
+      ],
+      "decision": {
+        "passed": true,
+        "best_distance": 0.5826866400789085,
+        "threshold": 0.6
+      }
+    }
+  ],
+  "chunk_audits": [
+    {
+      "passed": 42,
+      "total": 42,
+      "chunks": [
+        {
+          "label": "thread_bike_commute.txt#0",
+          "text": "THREAD: Is a bike worth it for a 20 minute walk commute?\n\n--- reply 1 (14 votes) ---\nYeah. Cuts an 18 minute walk to about 6. The thing nobody mentions is storage — covered bike parking exists at three buildings and is full by 9am at all three.\n\n--- reply 2 (9 votes) ---\nCounterpoint, I sold mine. Between November and March the paths are either icy or salted and salt destroys a drivetrain in one season.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Is a bike worth it for a 20 minute walk commute?",
+          "actual_heading": "THREAD: Is a bike worth it for a 20 minute walk commute?",
+          "passed": true
+        },
+        {
+          "label": "thread_bike_commute.txt#1",
+          "text": "THREAD: Is a bike worth it for a 20 minute walk commute?\n\nPrevious context: Between November and March the paths are either icy or salted and salt destroys a drivetrain in one season.\n\n--- reply 3 (22 votes) ---\nBoth true. I keep a cheap bike for September to November and walk the rest of the year. Total cost was about $120 for the bike and I don't care what happens to it.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Is a bike worth it for a 20 minute walk commute?",
+          "actual_heading": "THREAD: Is a bike worth it for a 20 minute walk commute?",
+          "passed": true
+        },
+        {
+          "label": "thread_bike_commute.txt#2",
+          "text": "THREAD: Is a bike worth it for a 20 minute walk commute?\n\nPrevious context: Total cost was about $120 for the bike and I don't care what happens to it.\n\n--- reply 4 (5 votes) ---\nIf you do get one, the campus does free registration and it's the only reason I got mine back after it was taken.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Is a bike worth it for a 20 minute walk commute?",
+          "actual_heading": "THREAD: Is a bike worth it for a 20 minute walk commute?",
+          "passed": true
+        },
+        {
+          "label": "thread_changing_major.txt#0",
+          "text": "THREAD: How hard is it to change major in second year?\n\n--- reply 1 (22 votes) ---\nAdministratively trivial — it's a form. The real question is whether the credits you've taken map onto the new requirements.\n\n--- reply 2 (27 votes) ---\nDepends enormously on the direction. Moving within the sciences is usually fine. Moving into a science from outside in your third year means an extra semester more often than not.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: How hard is it to change major in second year?",
+          "actual_heading": "THREAD: How hard is it to change major in second year?",
+          "passed": true
+        },
+        {
+          "label": "thread_changing_major.txt#1",
+          "text": "THREAD: How hard is it to change major in second year?\n\nPrevious context: Moving into a science from outside in your third year means an extra semester more often than not.\n\n--- reply 3 (19 votes) ---\nTalk to the department adviser for the major you want, not your current one. They know the exceptions.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: How hard is it to change major in second year?",
+          "actual_heading": "THREAD: How hard is it to change major in second year?",
+          "passed": true
+        },
+        {
+          "label": "thread_clubs.txt#0",
+          "text": "THREAD: How many clubs is too many?\n\n--- reply 1 (31 votes) ---\nTwo you actually turn up to beats six you signed up for at the fair.\n\n--- reply 2 (24 votes) ---\nThe club fair collects about four hundred email addresses per society and maybe thirty people ever appear. Don't feel bad about the signup sheet.\n\n--- reply 3 (18 votes) ---\nIf you want a leadership position later, depth in one is worth more than breadth across five.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: How many clubs is too many?",
+          "actual_heading": "THREAD: How many clubs is too many?",
+          "passed": true
+        },
+        {
+          "label": "thread_commuting.txt#0",
+          "text": "THREAD: Commuting an hour each way — is it survivable?\n\n--- reply 1 (26 votes) ---\nYes, but stack your courses. Three long days beats five short ones by a wide margin.\n\n--- reply 2 (21 votes) ---\nThe commuter lounge in the student centre has lockers you can rent for $20 a year and it changes the experience completely.\n\n--- reply 3 (13 votes) ---\nWatch the evening bus timetable before you register for anything that ends after 6pm.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Commuting an hour each way — is it survivable?",
+          "actual_heading": "THREAD: Commuting an hour each way — is it survivable?",
+          "passed": true
+        },
+        {
+          "label": "thread_commuting.txt#1",
+          "text": "THREAD: Commuting an hour each way — is it survivable?\n\nPrevious context: Watch the evening bus timetable before you register for anything that ends after 6pm.\n\n--- reply 4 (17 votes) ---\nI commuted for two years. The thing that made it work was treating the train as study time rather than dead time.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Commuting an hour each way — is it survivable?",
+          "actual_heading": "THREAD: Commuting an hour each way — is it survivable?",
+          "passed": true
+        },
+        {
+          "label": "thread_first_gen.txt#0",
+          "text": "THREAD: Anything specific for first-generation students?\n\n--- reply 1 (33 votes) ---\nThe advising office has a specific programme and it is genuinely good, but it is opt-in and badly publicised. Ask for it by name.\n\n--- reply 2 (41 votes) ---\nThe thing I'd say: the unwritten rules are the hard part, not the coursework. Ask about the unwritten rules explicitly. People are happy to explain them and nobody volunteers them.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Anything specific for first-generation students?",
+          "actual_heading": "THREAD: Anything specific for first-generation students?",
+          "passed": true
+        },
+        {
+          "label": "thread_first_gen.txt#1",
+          "text": "THREAD: Anything specific for first-generation students?\n\nPrevious context: People are happy to explain them and nobody volunteers them.\n\n--- reply 3 (16 votes) ---\nEmergency fund for textbooks and travel exists and is not means-tested beyond a short form.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Anything specific for first-generation students?",
+          "actual_heading": "THREAD: Anything specific for first-generation students?",
+          "passed": true
+        },
+        {
+          "label": "thread_first_year_regret.txt#0",
+          "text": "THREAD: What do you wish you'd known in first year?\n\n--- reply 1 (41 votes) ---\nThat the add/drop deadline and the withdrawal deadline are different dates and only one of them is on the calendar everyone reads.\n\n--- reply 2 (28 votes) ---\nThat you can take a course pass/fail and declare it late — up to week eight. I carried a grade I didn't need to.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: What do you wish you'd known in first year?",
+          "actual_heading": "THREAD: What do you wish you'd known in first year?",
+          "passed": true
+        },
+        {
+          "label": "thread_first_year_regret.txt#1",
+          "text": "THREAD: What do you wish you'd known in first year?\n\nPrevious context: I carried a grade I didn't need to.\n\n--- reply 3 (35 votes) ---\nThat the writing centre will read a draft for any course, not just writing courses. Free, and the appointments go unbooked.\n\n--- reply 4 (52 votes) ---\nHonestly: that nobody is watching as closely as you think. I spent a year worried about looking like I knew what I was doing.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: What do you wish you'd known in first year?",
+          "actual_heading": "THREAD: What do you wish you'd known in first year?",
+          "passed": true
+        },
+        {
+          "label": "thread_first_year_regret.txt#2",
+          "text": "THREAD: What do you wish you'd known in first year?\n\nPrevious context: I spent a year worried about looking like I knew what I was doing.\n\n--- reply 5 (17 votes) ---\nThat your adviser's job is partly to know the exceptions to rules. Ask before assuming a deadline is fixed.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: What do you wish you'd known in first year?",
+          "actual_heading": "THREAD: What do you wish you'd known in first year?",
+          "passed": true
+        },
+        {
+          "label": "thread_group_project.txt#0",
+          "text": "THREAD: How do you handle a group project where someone disappears?\n\n--- reply 1 (29 votes) ---\nDocument early. Not to be difficult — because if you go to the instructor in week 10 with nothing written down, there's nothing they can do.\n\n--- reply 2 (22 votes) ---\nMost instructors here will adjust individual grades if you raise it before the deadline rather than after. After is too late, consistently.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: How do you handle a group project where someone disappears?",
+          "actual_heading": "THREAD: How do you handle a group project where someone disappears?",
+          "passed": true
+        },
+        {
+          "label": "thread_group_project.txt#1",
+          "text": "THREAD: How do you handle a group project where someone disappears?\n\nPrevious context: After is too late, consistently.\n\n--- reply 3 (16 votes) ---\nSplit work into pieces that can be handed off. If one person's part is load-bearing for everyone else, one disappearance sinks it.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: How do you handle a group project where someone disappears?",
+          "actual_heading": "THREAD: How do you handle a group project where someone disappears?",
+          "passed": true
+        },
+        {
+          "label": "thread_internship_timing.txt#0",
+          "text": "THREAD: When should I start looking for a summer internship?\n\n--- reply 1 (30 votes) ---\nEarlier than feels reasonable. Large employers close applications in October and November for the following summer.\n\n--- reply 2 (25 votes) ---\nSmaller and local places hire in February and March, so if you missed autumn you have not missed everything.\n\n--- reply 3 (19 votes) ---\nThe careers office reviews CVs on a drop-in basis and the queue is almost never longer than one person.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: When should I start looking for a summer internship?",
+          "actual_heading": "THREAD: When should I start looking for a summer internship?",
+          "passed": true
+        },
+        {
+          "label": "thread_laptop_specs.txt#0",
+          "text": "THREAD: How much laptop do I actually need for CS courses?\n\n--- reply 1 (31 votes) ---\nLess than the recommended spec page says. 16GB of RAM is the one number worth paying for; everything else you'll never notice.\n\n--- reply 2 (18 votes) ---\nAdding: the lab machines exist and are better than anything you'll buy. For the heavy assignments people just use those.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: How much laptop do I actually need for CS courses?",
+          "actual_heading": "THREAD: How much laptop do I actually need for CS courses?",
+          "passed": true
+        },
+        {
+          "label": "thread_laptop_specs.txt#1",
+          "text": "THREAD: How much laptop do I actually need for CS courses?\n\nPrevious context: For the heavy assignments people just use those.\n\n--- reply 3 (12 votes) ---\nI did two years on an 8GB machine and it was fine until the last project, at which point it very much wasn't. 16 is the answer.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: How much laptop do I actually need for CS courses?",
+          "actual_heading": "THREAD: How much laptop do I actually need for CS courses?",
+          "passed": true
+        },
+        {
+          "label": "thread_late_work.txt#0",
+          "text": "THREAD: What actually happens if you hand something in late?\n\n--- reply 1 (20 votes) ---\nEntirely instructor-dependent and the syllabus is accurate. If it says 10% a day, it's 10% a day.\n\n--- reply 2 (47 votes) ---\nThe universal rule: ask before the deadline, not after. Almost everyone will give you two days if you ask on Wednesday for a Friday deadline. Almost nobody will on the following Monday.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: What actually happens if you hand something in late?",
+          "actual_heading": "THREAD: What actually happens if you hand something in late?",
+          "passed": true
+        },
+        {
+          "label": "thread_late_work.txt#1",
+          "text": "THREAD: What actually happens if you hand something in late?\n\nPrevious context: Almost nobody will on the following Monday.\n\n--- reply 3 (15 votes) ---\nDocumented illness goes through the dean of students rather than the instructor, and that route works.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: What actually happens if you hand something in late?",
+          "actual_heading": "THREAD: What actually happens if you hand something in late?",
+          "passed": true
+        },
+        {
+          "label": "thread_laundry_timing.txt#0",
+          "text": "THREAD: When is laundry actually free in the dorms?\n\n--- reply 1 (27 votes) ---\nTuesday and Wednesday mornings, every building. Sunday evening is the worst and it isn't close.\n\n--- reply 2 (8 votes) ---\nDepends heavily on your building. Morrow has more machines per person than Fenwick so it's less of a problem there.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: When is laundry actually free in the dorms?",
+          "actual_heading": "THREAD: When is laundry actually free in the dorms?",
+          "passed": true
+        },
+        {
+          "label": "thread_laundry_timing.txt#1",
+          "text": "THREAD: When is laundry actually free in the dorms?\n\nPrevious context: Morrow has more machines per person than Fenwick so it's less of a problem there.\n\n--- reply 3 (16 votes) ---\nThe app that shows machine availability is wrong about half the time. It reports a machine as free for a few minutes after it finishes but before someone unloads it.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: When is laundry actually free in the dorms?",
+          "actual_heading": "THREAD: When is laundry actually free in the dorms?",
+          "passed": true
+        },
+        {
+          "label": "thread_meal_plan_tier.txt#0",
+          "text": "THREAD: Which meal plan tier is right?\n\n--- reply 1 (24 votes) ---\nDepends entirely on whether your building has a kitchen. Fenwick has kitchenettes, so people there go down a tier and cook two or three nights. Everywhere else, get the middle tier.\n\n--- reply 2 (19 votes) ---\nThe highest tier only makes sense if you eat three meals a day in the halls every single day, which basically nobody does past October.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Which meal plan tier is right?",
+          "actual_heading": "THREAD: Which meal plan tier is right?",
+          "passed": true
+        },
+        {
+          "label": "thread_meal_plan_tier.txt#1",
+          "text": "THREAD: Which meal plan tier is right?\n\nPrevious context: The highest tier only makes sense if you eat three meals a day in the halls every single day, which basically nobody does past October.\n\n--- reply 3 (11 votes) ---\nRemember you can only change it once and only in the first ten days. I waited and got stuck on a plan I didn't use.\n\n--- reply 4 (7 votes) ---\nDeclining balance rolls within the semester but not between them. Spend it in December or lose it.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Which meal plan tier is right?",
+          "actual_heading": "THREAD: Which meal plan tier is right?",
+          "passed": true
+        },
+        {
+          "label": "thread_office_hours_etiquette.txt#0",
+          "text": "THREAD: Is it weird to go to office hours with no specific question?\n\n--- reply 1 (44 votes) ---\nNo, and this is the single most common thing first years get wrong. 'I'm following the lectures but I don't feel like I understand the shape of it' is a completely normal thing to say.\n\n--- reply 2 (29 votes) ---\nThey're usually empty. You are doing the instructor a favour by turning up.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Is it weird to go to office hours with no specific question?",
+          "actual_heading": "THREAD: Is it weird to go to office hours with no specific question?",
+          "passed": true
+        },
+        {
+          "label": "thread_office_hours_etiquette.txt#1",
+          "text": "THREAD: Is it weird to go to office hours with no specific question?\n\nPrevious context: You are doing the instructor a favour by turning up.\n\n--- reply 3 (18 votes) ---\nIf it helps, treat it as a standing appointment. Go every week for a month and it stops feeling like a thing.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Is it weird to go to office hours with no specific question?",
+          "actual_heading": "THREAD: Is it weird to go to office hours with no specific question?",
+          "passed": true
+        },
+        {
+          "label": "thread_parking.txt#0",
+          "text": "THREAD: Worth getting a parking permit?\n\n--- reply 1 (15 votes) ---\nWest lots sell out in about three days in August. East lot never sells out but it's a 12 minute walk, at which point you might as well have parked on the street.\n\n--- reply 2 (21 votes) ---\nStreet parking on Verrill is legal and free and unmarked, which is why half the upper years do it.\n\n--- reply 3 (8 votes) ---\nIf you're commuting daily, the west permit is worth the August scramble. Otherwise don't bother.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Worth getting a parking permit?",
+          "actual_heading": "THREAD: Worth getting a parking permit?",
+          "passed": true
+        },
+        {
+          "label": "thread_pass_fail.txt#0",
+          "text": "THREAD: When should you actually use the pass/fail option?\n\n--- reply 1 (24 votes) ---\nFor a course outside your major that you're taking because you're curious. That's what it's for and most people never use it.\n\n--- reply 2 (38 votes) ---\nThe part that isn't advertised: you can declare it as late as week eight. So take the midterm first, then decide.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: When should you actually use the pass/fail option?",
+          "actual_heading": "THREAD: When should you actually use the pass/fail option?",
+          "passed": true
+        },
+        {
+          "label": "thread_pass_fail.txt#1",
+          "text": "THREAD: When should you actually use the pass/fail option?\n\nPrevious context: So take the midterm first, then decide.\n\n--- reply 3 (20 votes) ---\nCareful with this one if you're applying to graduate programmes. Some want a letter grade for prerequisites and a P doesn't satisfy it.\n\n--- reply 4 (12 votes) ---\nTwo per year and eight across the degree. I hit the annual limit in second year and regretted spending one on an easy course.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: When should you actually use the pass/fail option?",
+          "actual_heading": "THREAD: When should you actually use the pass/fail option?",
+          "passed": true
+        },
+        {
+          "label": "thread_printing.txt#0",
+          "text": "THREAD: Is the printing quota enough?\n\n--- reply 1 (17 votes) ---\nFor most people yes. $30 is about 600 pages black and white. It's the colour printing that eats it — eight times the cost per page.\n\n--- reply 2 (11 votes) ---\nDoesn't roll over between semesters. Print your readings in December rather than losing it.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Is the printing quota enough?",
+          "actual_heading": "THREAD: Is the printing quota enough?",
+          "passed": true
+        },
+        {
+          "label": "thread_professor_email.txt#0",
+          "text": "THREAD: Do professors actually answer email?\n\n--- reply 1 (21 votes) ---\nVaries enormously. General rule I've found: if the syllabus states a response window, it's honoured. If it doesn't, assume 48 hours and don't panic before then.\n\n--- reply 2 (33 votes) ---\nOffice hours are dramatically more effective than email for anything that takes more than two sentences to answer. They're also usually empty.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Do professors actually answer email?",
+          "actual_heading": "THREAD: Do professors actually answer email?",
+          "passed": true
+        },
+        {
+          "label": "thread_professor_email.txt#1",
+          "text": "THREAD: Do professors actually answer email?\n\nPrevious context: They're also usually empty.\n\n--- reply 3 (15 votes) ---\nEmpty office hours is the biggest unused resource here and I say that having wasted a year not going.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Do professors actually answer email?",
+          "actual_heading": "THREAD: Do professors actually answer email?",
+          "passed": true
+        },
+        {
+          "label": "thread_roommate_conflict.txt#0",
+          "text": "THREAD: Roommate situation isn't working. What now?\n\n--- reply 1 (28 votes) ---\nTalk to your RA early, and frame it as 'we need help sorting this out' rather than 'move me'. Room changes are possible but the process starts with mediation and skipping that step slows it down.\n\n--- reply 2 (14 votes) ---\nRoom changes happen at the semester boundary almost always, and mid-semester only in fairly serious cases.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Roommate situation isn't working. What now?",
+          "actual_heading": "THREAD: Roommate situation isn't working. What now?",
+          "passed": true
+        },
+        {
+          "label": "thread_roommate_conflict.txt#1",
+          "text": "THREAD: Roommate situation isn't working. What now?\n\nPrevious context: Room changes happen at the semester boundary almost always, and mid-semester only in fairly serious cases.\n\n--- reply 3 (33 votes) ---\nWrite down specifics before the meeting. 'It's not working' is hard to act on; 'guests four nights a week past 2am' is not.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Roommate situation isn't working. What now?",
+          "actual_heading": "THREAD: Roommate situation isn't working. What now?",
+          "passed": true
+        },
+        {
+          "label": "thread_sleep_schedule.txt#0",
+          "text": "THREAD: Everyone says fix your sleep. Does it actually matter?\n\n--- reply 1 (29 votes) ---\nYes, and the specific thing that helped me was scheduling no classes before 10am rather than trying to become a morning person.\n\n--- reply 2 (37 votes) ---\nThe library being open until 2am is a trap. It's a resource, not a schedule.\n\n--- reply 3 (16 votes) ---\nCounselling runs a short workshop on this that is more practical than it sounds. Four sessions, and it's free.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Everyone says fix your sleep. Does it actually matter?",
+          "actual_heading": "THREAD: Everyone says fix your sleep. Does it actually matter?",
+          "passed": true
+        },
+        {
+          "label": "thread_study_spots.txt#0",
+          "text": "THREAD: Best study spots that aren't the library?\n\n--- reply 1 (23 votes) ---\nRidgeway Café before 10am. Empty, quiet, good coffee, and they don't push you out.\n\n--- reply 2 (19 votes) ---\nThe science building has open lounges on floors 2 through 5 that are unlocked and almost always empty.\n\n--- reply 3 (14 votes) ---\nDepends what you need. If you need silence, the library third floor is the only place that reliably delivers it.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Best study spots that aren't the library?",
+          "actual_heading": "THREAD: Best study spots that aren't the library?",
+          "passed": true
+        },
+        {
+          "label": "thread_study_spots.txt#1",
+          "text": "THREAD: Best study spots that aren't the library?\n\nPrevious context: If you need silence, the library third floor is the only place that reliably delivers it.\n\n--- reply 4 (9 votes) ---\nThe group study rooms in the library can be booked by one person and used alone. Nobody checks.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Best study spots that aren't the library?",
+          "actual_heading": "THREAD: Best study spots that aren't the library?",
+          "passed": true
+        },
+        {
+          "label": "thread_textbook_editions.txt#0",
+          "text": "THREAD: Does the edition of the textbook matter?\n\n--- reply 1 (23 votes) ---\nFor maths and physics, almost never — problem numbering shifts and that's it. For anything where the field moves, it can matter a lot.\n\n--- reply 2 (34 votes) ---\nAsk the instructor directly. Most will tell you the previous edition is fine, and they can't put that in the syllabus for procurement reasons.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Does the edition of the textbook matter?",
+          "actual_heading": "THREAD: Does the edition of the textbook matter?",
+          "passed": true
+        },
+        {
+          "label": "thread_textbook_editions.txt#1",
+          "text": "THREAD: Does the edition of the textbook matter?\n\nPrevious context: Most will tell you the previous edition is fine, and they can't put that in the syllabus for procurement reasons.\n\n--- reply 3 (12 votes) ---\nThe library reserve copy is always the current edition, so you can check the numbering against yours for free.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Does the edition of the textbook matter?",
+          "actual_heading": "THREAD: Does the edition of the textbook matter?",
+          "passed": true
+        },
+        {
+          "label": "thread_transfer_credits.txt#0",
+          "text": "THREAD: Do transfer credits actually count toward the major?\n\n--- reply 1 (20 votes) ---\nToward general requirements almost always. Toward the major it's case-by-case and the department decides, not the registrar.\n\n--- reply 2 (25 votes) ---\nGet it in writing from the department before you rely on it. I had a verbal yes that didn't survive a staff change.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Do transfer credits actually count toward the major?",
+          "actual_heading": "THREAD: Do transfer credits actually count toward the major?",
+          "passed": true
+        },
+        {
+          "label": "thread_transfer_credits.txt#1",
+          "text": "THREAD: Do transfer credits actually count toward the major?\n\nPrevious context: I had a verbal yes that didn't survive a staff change.\n\n--- reply 3 (13 votes) ---\nThe credit hours count for registration priority and the housing lottery even when they don't count toward the major, which is worth knowing.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Do transfer credits actually count toward the major?",
+          "actual_heading": "THREAD: Do transfer credits actually count toward the major?",
+          "passed": true
+        },
+        {
+          "label": "thread_winter_advice.txt#0",
+          "text": "THREAD: First winter here — what do I need?\n\n--- reply 1 (26 votes) ---\nLayers, not a big coat. The buildings are overheated and you'll carry a parka around all day.\n\n--- reply 2 (31 votes) ---\nBoots with actual tread. The path past the pond ices over and people go down on it every year.\n\n--- reply 3 (18 votes) ---\nGet a light that clips to your bag. It's dark by 4:30 in December and parts of the walk from Fenwick aren't lit well.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: First winter here — what do I need?",
+          "actual_heading": "THREAD: First winter here — what do I need?",
+          "passed": true
+        }
+      ],
+      "run": 1
+    },
+    {
+      "passed": 42,
+      "total": 42,
+      "chunks": [
+        {
+          "label": "thread_bike_commute.txt#0",
+          "text": "THREAD: Is a bike worth it for a 20 minute walk commute?\n\n--- reply 1 (14 votes) ---\nYeah. Cuts an 18 minute walk to about 6. The thing nobody mentions is storage — covered bike parking exists at three buildings and is full by 9am at all three.\n\n--- reply 2 (9 votes) ---\nCounterpoint, I sold mine. Between November and March the paths are either icy or salted and salt destroys a drivetrain in one season.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Is a bike worth it for a 20 minute walk commute?",
+          "actual_heading": "THREAD: Is a bike worth it for a 20 minute walk commute?",
+          "passed": true
+        },
+        {
+          "label": "thread_bike_commute.txt#1",
+          "text": "THREAD: Is a bike worth it for a 20 minute walk commute?\n\nPrevious context: Between November and March the paths are either icy or salted and salt destroys a drivetrain in one season.\n\n--- reply 3 (22 votes) ---\nBoth true. I keep a cheap bike for September to November and walk the rest of the year. Total cost was about $120 for the bike and I don't care what happens to it.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Is a bike worth it for a 20 minute walk commute?",
+          "actual_heading": "THREAD: Is a bike worth it for a 20 minute walk commute?",
+          "passed": true
+        },
+        {
+          "label": "thread_bike_commute.txt#2",
+          "text": "THREAD: Is a bike worth it for a 20 minute walk commute?\n\nPrevious context: Total cost was about $120 for the bike and I don't care what happens to it.\n\n--- reply 4 (5 votes) ---\nIf you do get one, the campus does free registration and it's the only reason I got mine back after it was taken.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Is a bike worth it for a 20 minute walk commute?",
+          "actual_heading": "THREAD: Is a bike worth it for a 20 minute walk commute?",
+          "passed": true
+        },
+        {
+          "label": "thread_changing_major.txt#0",
+          "text": "THREAD: How hard is it to change major in second year?\n\n--- reply 1 (22 votes) ---\nAdministratively trivial — it's a form. The real question is whether the credits you've taken map onto the new requirements.\n\n--- reply 2 (27 votes) ---\nDepends enormously on the direction. Moving within the sciences is usually fine. Moving into a science from outside in your third year means an extra semester more often than not.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: How hard is it to change major in second year?",
+          "actual_heading": "THREAD: How hard is it to change major in second year?",
+          "passed": true
+        },
+        {
+          "label": "thread_changing_major.txt#1",
+          "text": "THREAD: How hard is it to change major in second year?\n\nPrevious context: Moving into a science from outside in your third year means an extra semester more often than not.\n\n--- reply 3 (19 votes) ---\nTalk to the department adviser for the major you want, not your current one. They know the exceptions.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: How hard is it to change major in second year?",
+          "actual_heading": "THREAD: How hard is it to change major in second year?",
+          "passed": true
+        },
+        {
+          "label": "thread_clubs.txt#0",
+          "text": "THREAD: How many clubs is too many?\n\n--- reply 1 (31 votes) ---\nTwo you actually turn up to beats six you signed up for at the fair.\n\n--- reply 2 (24 votes) ---\nThe club fair collects about four hundred email addresses per society and maybe thirty people ever appear. Don't feel bad about the signup sheet.\n\n--- reply 3 (18 votes) ---\nIf you want a leadership position later, depth in one is worth more than breadth across five.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: How many clubs is too many?",
+          "actual_heading": "THREAD: How many clubs is too many?",
+          "passed": true
+        },
+        {
+          "label": "thread_commuting.txt#0",
+          "text": "THREAD: Commuting an hour each way — is it survivable?\n\n--- reply 1 (26 votes) ---\nYes, but stack your courses. Three long days beats five short ones by a wide margin.\n\n--- reply 2 (21 votes) ---\nThe commuter lounge in the student centre has lockers you can rent for $20 a year and it changes the experience completely.\n\n--- reply 3 (13 votes) ---\nWatch the evening bus timetable before you register for anything that ends after 6pm.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Commuting an hour each way — is it survivable?",
+          "actual_heading": "THREAD: Commuting an hour each way — is it survivable?",
+          "passed": true
+        },
+        {
+          "label": "thread_commuting.txt#1",
+          "text": "THREAD: Commuting an hour each way — is it survivable?\n\nPrevious context: Watch the evening bus timetable before you register for anything that ends after 6pm.\n\n--- reply 4 (17 votes) ---\nI commuted for two years. The thing that made it work was treating the train as study time rather than dead time.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Commuting an hour each way — is it survivable?",
+          "actual_heading": "THREAD: Commuting an hour each way — is it survivable?",
+          "passed": true
+        },
+        {
+          "label": "thread_first_gen.txt#0",
+          "text": "THREAD: Anything specific for first-generation students?\n\n--- reply 1 (33 votes) ---\nThe advising office has a specific programme and it is genuinely good, but it is opt-in and badly publicised. Ask for it by name.\n\n--- reply 2 (41 votes) ---\nThe thing I'd say: the unwritten rules are the hard part, not the coursework. Ask about the unwritten rules explicitly. People are happy to explain them and nobody volunteers them.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Anything specific for first-generation students?",
+          "actual_heading": "THREAD: Anything specific for first-generation students?",
+          "passed": true
+        },
+        {
+          "label": "thread_first_gen.txt#1",
+          "text": "THREAD: Anything specific for first-generation students?\n\nPrevious context: People are happy to explain them and nobody volunteers them.\n\n--- reply 3 (16 votes) ---\nEmergency fund for textbooks and travel exists and is not means-tested beyond a short form.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Anything specific for first-generation students?",
+          "actual_heading": "THREAD: Anything specific for first-generation students?",
+          "passed": true
+        },
+        {
+          "label": "thread_first_year_regret.txt#0",
+          "text": "THREAD: What do you wish you'd known in first year?\n\n--- reply 1 (41 votes) ---\nThat the add/drop deadline and the withdrawal deadline are different dates and only one of them is on the calendar everyone reads.\n\n--- reply 2 (28 votes) ---\nThat you can take a course pass/fail and declare it late — up to week eight. I carried a grade I didn't need to.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: What do you wish you'd known in first year?",
+          "actual_heading": "THREAD: What do you wish you'd known in first year?",
+          "passed": true
+        },
+        {
+          "label": "thread_first_year_regret.txt#1",
+          "text": "THREAD: What do you wish you'd known in first year?\n\nPrevious context: I carried a grade I didn't need to.\n\n--- reply 3 (35 votes) ---\nThat the writing centre will read a draft for any course, not just writing courses. Free, and the appointments go unbooked.\n\n--- reply 4 (52 votes) ---\nHonestly: that nobody is watching as closely as you think. I spent a year worried about looking like I knew what I was doing.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: What do you wish you'd known in first year?",
+          "actual_heading": "THREAD: What do you wish you'd known in first year?",
+          "passed": true
+        },
+        {
+          "label": "thread_first_year_regret.txt#2",
+          "text": "THREAD: What do you wish you'd known in first year?\n\nPrevious context: I spent a year worried about looking like I knew what I was doing.\n\n--- reply 5 (17 votes) ---\nThat your adviser's job is partly to know the exceptions to rules. Ask before assuming a deadline is fixed.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: What do you wish you'd known in first year?",
+          "actual_heading": "THREAD: What do you wish you'd known in first year?",
+          "passed": true
+        },
+        {
+          "label": "thread_group_project.txt#0",
+          "text": "THREAD: How do you handle a group project where someone disappears?\n\n--- reply 1 (29 votes) ---\nDocument early. Not to be difficult — because if you go to the instructor in week 10 with nothing written down, there's nothing they can do.\n\n--- reply 2 (22 votes) ---\nMost instructors here will adjust individual grades if you raise it before the deadline rather than after. After is too late, consistently.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: How do you handle a group project where someone disappears?",
+          "actual_heading": "THREAD: How do you handle a group project where someone disappears?",
+          "passed": true
+        },
+        {
+          "label": "thread_group_project.txt#1",
+          "text": "THREAD: How do you handle a group project where someone disappears?\n\nPrevious context: After is too late, consistently.\n\n--- reply 3 (16 votes) ---\nSplit work into pieces that can be handed off. If one person's part is load-bearing for everyone else, one disappearance sinks it.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: How do you handle a group project where someone disappears?",
+          "actual_heading": "THREAD: How do you handle a group project where someone disappears?",
+          "passed": true
+        },
+        {
+          "label": "thread_internship_timing.txt#0",
+          "text": "THREAD: When should I start looking for a summer internship?\n\n--- reply 1 (30 votes) ---\nEarlier than feels reasonable. Large employers close applications in October and November for the following summer.\n\n--- reply 2 (25 votes) ---\nSmaller and local places hire in February and March, so if you missed autumn you have not missed everything.\n\n--- reply 3 (19 votes) ---\nThe careers office reviews CVs on a drop-in basis and the queue is almost never longer than one person.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: When should I start looking for a summer internship?",
+          "actual_heading": "THREAD: When should I start looking for a summer internship?",
+          "passed": true
+        },
+        {
+          "label": "thread_laptop_specs.txt#0",
+          "text": "THREAD: How much laptop do I actually need for CS courses?\n\n--- reply 1 (31 votes) ---\nLess than the recommended spec page says. 16GB of RAM is the one number worth paying for; everything else you'll never notice.\n\n--- reply 2 (18 votes) ---\nAdding: the lab machines exist and are better than anything you'll buy. For the heavy assignments people just use those.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: How much laptop do I actually need for CS courses?",
+          "actual_heading": "THREAD: How much laptop do I actually need for CS courses?",
+          "passed": true
+        },
+        {
+          "label": "thread_laptop_specs.txt#1",
+          "text": "THREAD: How much laptop do I actually need for CS courses?\n\nPrevious context: For the heavy assignments people just use those.\n\n--- reply 3 (12 votes) ---\nI did two years on an 8GB machine and it was fine until the last project, at which point it very much wasn't. 16 is the answer.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: How much laptop do I actually need for CS courses?",
+          "actual_heading": "THREAD: How much laptop do I actually need for CS courses?",
+          "passed": true
+        },
+        {
+          "label": "thread_late_work.txt#0",
+          "text": "THREAD: What actually happens if you hand something in late?\n\n--- reply 1 (20 votes) ---\nEntirely instructor-dependent and the syllabus is accurate. If it says 10% a day, it's 10% a day.\n\n--- reply 2 (47 votes) ---\nThe universal rule: ask before the deadline, not after. Almost everyone will give you two days if you ask on Wednesday for a Friday deadline. Almost nobody will on the following Monday.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: What actually happens if you hand something in late?",
+          "actual_heading": "THREAD: What actually happens if you hand something in late?",
+          "passed": true
+        },
+        {
+          "label": "thread_late_work.txt#1",
+          "text": "THREAD: What actually happens if you hand something in late?\n\nPrevious context: Almost nobody will on the following Monday.\n\n--- reply 3 (15 votes) ---\nDocumented illness goes through the dean of students rather than the instructor, and that route works.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: What actually happens if you hand something in late?",
+          "actual_heading": "THREAD: What actually happens if you hand something in late?",
+          "passed": true
+        },
+        {
+          "label": "thread_laundry_timing.txt#0",
+          "text": "THREAD: When is laundry actually free in the dorms?\n\n--- reply 1 (27 votes) ---\nTuesday and Wednesday mornings, every building. Sunday evening is the worst and it isn't close.\n\n--- reply 2 (8 votes) ---\nDepends heavily on your building. Morrow has more machines per person than Fenwick so it's less of a problem there.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: When is laundry actually free in the dorms?",
+          "actual_heading": "THREAD: When is laundry actually free in the dorms?",
+          "passed": true
+        },
+        {
+          "label": "thread_laundry_timing.txt#1",
+          "text": "THREAD: When is laundry actually free in the dorms?\n\nPrevious context: Morrow has more machines per person than Fenwick so it's less of a problem there.\n\n--- reply 3 (16 votes) ---\nThe app that shows machine availability is wrong about half the time. It reports a machine as free for a few minutes after it finishes but before someone unloads it.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: When is laundry actually free in the dorms?",
+          "actual_heading": "THREAD: When is laundry actually free in the dorms?",
+          "passed": true
+        },
+        {
+          "label": "thread_meal_plan_tier.txt#0",
+          "text": "THREAD: Which meal plan tier is right?\n\n--- reply 1 (24 votes) ---\nDepends entirely on whether your building has a kitchen. Fenwick has kitchenettes, so people there go down a tier and cook two or three nights. Everywhere else, get the middle tier.\n\n--- reply 2 (19 votes) ---\nThe highest tier only makes sense if you eat three meals a day in the halls every single day, which basically nobody does past October.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Which meal plan tier is right?",
+          "actual_heading": "THREAD: Which meal plan tier is right?",
+          "passed": true
+        },
+        {
+          "label": "thread_meal_plan_tier.txt#1",
+          "text": "THREAD: Which meal plan tier is right?\n\nPrevious context: The highest tier only makes sense if you eat three meals a day in the halls every single day, which basically nobody does past October.\n\n--- reply 3 (11 votes) ---\nRemember you can only change it once and only in the first ten days. I waited and got stuck on a plan I didn't use.\n\n--- reply 4 (7 votes) ---\nDeclining balance rolls within the semester but not between them. Spend it in December or lose it.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Which meal plan tier is right?",
+          "actual_heading": "THREAD: Which meal plan tier is right?",
+          "passed": true
+        },
+        {
+          "label": "thread_office_hours_etiquette.txt#0",
+          "text": "THREAD: Is it weird to go to office hours with no specific question?\n\n--- reply 1 (44 votes) ---\nNo, and this is the single most common thing first years get wrong. 'I'm following the lectures but I don't feel like I understand the shape of it' is a completely normal thing to say.\n\n--- reply 2 (29 votes) ---\nThey're usually empty. You are doing the instructor a favour by turning up.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Is it weird to go to office hours with no specific question?",
+          "actual_heading": "THREAD: Is it weird to go to office hours with no specific question?",
+          "passed": true
+        },
+        {
+          "label": "thread_office_hours_etiquette.txt#1",
+          "text": "THREAD: Is it weird to go to office hours with no specific question?\n\nPrevious context: You are doing the instructor a favour by turning up.\n\n--- reply 3 (18 votes) ---\nIf it helps, treat it as a standing appointment. Go every week for a month and it stops feeling like a thing.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Is it weird to go to office hours with no specific question?",
+          "actual_heading": "THREAD: Is it weird to go to office hours with no specific question?",
+          "passed": true
+        },
+        {
+          "label": "thread_parking.txt#0",
+          "text": "THREAD: Worth getting a parking permit?\n\n--- reply 1 (15 votes) ---\nWest lots sell out in about three days in August. East lot never sells out but it's a 12 minute walk, at which point you might as well have parked on the street.\n\n--- reply 2 (21 votes) ---\nStreet parking on Verrill is legal and free and unmarked, which is why half the upper years do it.\n\n--- reply 3 (8 votes) ---\nIf you're commuting daily, the west permit is worth the August scramble. Otherwise don't bother.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Worth getting a parking permit?",
+          "actual_heading": "THREAD: Worth getting a parking permit?",
+          "passed": true
+        },
+        {
+          "label": "thread_pass_fail.txt#0",
+          "text": "THREAD: When should you actually use the pass/fail option?\n\n--- reply 1 (24 votes) ---\nFor a course outside your major that you're taking because you're curious. That's what it's for and most people never use it.\n\n--- reply 2 (38 votes) ---\nThe part that isn't advertised: you can declare it as late as week eight. So take the midterm first, then decide.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: When should you actually use the pass/fail option?",
+          "actual_heading": "THREAD: When should you actually use the pass/fail option?",
+          "passed": true
+        },
+        {
+          "label": "thread_pass_fail.txt#1",
+          "text": "THREAD: When should you actually use the pass/fail option?\n\nPrevious context: So take the midterm first, then decide.\n\n--- reply 3 (20 votes) ---\nCareful with this one if you're applying to graduate programmes. Some want a letter grade for prerequisites and a P doesn't satisfy it.\n\n--- reply 4 (12 votes) ---\nTwo per year and eight across the degree. I hit the annual limit in second year and regretted spending one on an easy course.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: When should you actually use the pass/fail option?",
+          "actual_heading": "THREAD: When should you actually use the pass/fail option?",
+          "passed": true
+        },
+        {
+          "label": "thread_printing.txt#0",
+          "text": "THREAD: Is the printing quota enough?\n\n--- reply 1 (17 votes) ---\nFor most people yes. $30 is about 600 pages black and white. It's the colour printing that eats it — eight times the cost per page.\n\n--- reply 2 (11 votes) ---\nDoesn't roll over between semesters. Print your readings in December rather than losing it.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Is the printing quota enough?",
+          "actual_heading": "THREAD: Is the printing quota enough?",
+          "passed": true
+        },
+        {
+          "label": "thread_professor_email.txt#0",
+          "text": "THREAD: Do professors actually answer email?\n\n--- reply 1 (21 votes) ---\nVaries enormously. General rule I've found: if the syllabus states a response window, it's honoured. If it doesn't, assume 48 hours and don't panic before then.\n\n--- reply 2 (33 votes) ---\nOffice hours are dramatically more effective than email for anything that takes more than two sentences to answer. They're also usually empty.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Do professors actually answer email?",
+          "actual_heading": "THREAD: Do professors actually answer email?",
+          "passed": true
+        },
+        {
+          "label": "thread_professor_email.txt#1",
+          "text": "THREAD: Do professors actually answer email?\n\nPrevious context: They're also usually empty.\n\n--- reply 3 (15 votes) ---\nEmpty office hours is the biggest unused resource here and I say that having wasted a year not going.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Do professors actually answer email?",
+          "actual_heading": "THREAD: Do professors actually answer email?",
+          "passed": true
+        },
+        {
+          "label": "thread_roommate_conflict.txt#0",
+          "text": "THREAD: Roommate situation isn't working. What now?\n\n--- reply 1 (28 votes) ---\nTalk to your RA early, and frame it as 'we need help sorting this out' rather than 'move me'. Room changes are possible but the process starts with mediation and skipping that step slows it down.\n\n--- reply 2 (14 votes) ---\nRoom changes happen at the semester boundary almost always, and mid-semester only in fairly serious cases.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Roommate situation isn't working. What now?",
+          "actual_heading": "THREAD: Roommate situation isn't working. What now?",
+          "passed": true
+        },
+        {
+          "label": "thread_roommate_conflict.txt#1",
+          "text": "THREAD: Roommate situation isn't working. What now?\n\nPrevious context: Room changes happen at the semester boundary almost always, and mid-semester only in fairly serious cases.\n\n--- reply 3 (33 votes) ---\nWrite down specifics before the meeting. 'It's not working' is hard to act on; 'guests four nights a week past 2am' is not.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Roommate situation isn't working. What now?",
+          "actual_heading": "THREAD: Roommate situation isn't working. What now?",
+          "passed": true
+        },
+        {
+          "label": "thread_sleep_schedule.txt#0",
+          "text": "THREAD: Everyone says fix your sleep. Does it actually matter?\n\n--- reply 1 (29 votes) ---\nYes, and the specific thing that helped me was scheduling no classes before 10am rather than trying to become a morning person.\n\n--- reply 2 (37 votes) ---\nThe library being open until 2am is a trap. It's a resource, not a schedule.\n\n--- reply 3 (16 votes) ---\nCounselling runs a short workshop on this that is more practical than it sounds. Four sessions, and it's free.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Everyone says fix your sleep. Does it actually matter?",
+          "actual_heading": "THREAD: Everyone says fix your sleep. Does it actually matter?",
+          "passed": true
+        },
+        {
+          "label": "thread_study_spots.txt#0",
+          "text": "THREAD: Best study spots that aren't the library?\n\n--- reply 1 (23 votes) ---\nRidgeway Café before 10am. Empty, quiet, good coffee, and they don't push you out.\n\n--- reply 2 (19 votes) ---\nThe science building has open lounges on floors 2 through 5 that are unlocked and almost always empty.\n\n--- reply 3 (14 votes) ---\nDepends what you need. If you need silence, the library third floor is the only place that reliably delivers it.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Best study spots that aren't the library?",
+          "actual_heading": "THREAD: Best study spots that aren't the library?",
+          "passed": true
+        },
+        {
+          "label": "thread_study_spots.txt#1",
+          "text": "THREAD: Best study spots that aren't the library?\n\nPrevious context: If you need silence, the library third floor is the only place that reliably delivers it.\n\n--- reply 4 (9 votes) ---\nThe group study rooms in the library can be booked by one person and used alone. Nobody checks.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Best study spots that aren't the library?",
+          "actual_heading": "THREAD: Best study spots that aren't the library?",
+          "passed": true
+        },
+        {
+          "label": "thread_textbook_editions.txt#0",
+          "text": "THREAD: Does the edition of the textbook matter?\n\n--- reply 1 (23 votes) ---\nFor maths and physics, almost never — problem numbering shifts and that's it. For anything where the field moves, it can matter a lot.\n\n--- reply 2 (34 votes) ---\nAsk the instructor directly. Most will tell you the previous edition is fine, and they can't put that in the syllabus for procurement reasons.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Does the edition of the textbook matter?",
+          "actual_heading": "THREAD: Does the edition of the textbook matter?",
+          "passed": true
+        },
+        {
+          "label": "thread_textbook_editions.txt#1",
+          "text": "THREAD: Does the edition of the textbook matter?\n\nPrevious context: Most will tell you the previous edition is fine, and they can't put that in the syllabus for procurement reasons.\n\n--- reply 3 (12 votes) ---\nThe library reserve copy is always the current edition, so you can check the numbering against yours for free.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Does the edition of the textbook matter?",
+          "actual_heading": "THREAD: Does the edition of the textbook matter?",
+          "passed": true
+        },
+        {
+          "label": "thread_transfer_credits.txt#0",
+          "text": "THREAD: Do transfer credits actually count toward the major?\n\n--- reply 1 (20 votes) ---\nToward general requirements almost always. Toward the major it's case-by-case and the department decides, not the registrar.\n\n--- reply 2 (25 votes) ---\nGet it in writing from the department before you rely on it. I had a verbal yes that didn't survive a staff change.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Do transfer credits actually count toward the major?",
+          "actual_heading": "THREAD: Do transfer credits actually count toward the major?",
+          "passed": true
+        },
+        {
+          "label": "thread_transfer_credits.txt#1",
+          "text": "THREAD: Do transfer credits actually count toward the major?\n\nPrevious context: I had a verbal yes that didn't survive a staff change.\n\n--- reply 3 (13 votes) ---\nThe credit hours count for registration priority and the housing lottery even when they don't count toward the major, which is worth knowing.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Do transfer credits actually count toward the major?",
+          "actual_heading": "THREAD: Do transfer credits actually count toward the major?",
+          "passed": true
+        },
+        {
+          "label": "thread_winter_advice.txt#0",
+          "text": "THREAD: First winter here — what do I need?\n\n--- reply 1 (26 votes) ---\nLayers, not a big coat. The buildings are overheated and you'll carry a parka around all day.\n\n--- reply 2 (31 votes) ---\nBoots with actual tread. The path past the pond ices over and people go down on it every year.\n\n--- reply 3 (18 votes) ---\nGet a light that clips to your bag. It's dark by 4:30 in December and parts of the walk from Fenwick aren't lit well.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: First winter here — what do I need?",
+          "actual_heading": "THREAD: First winter here — what do I need?",
+          "passed": true
+        }
+      ],
+      "run": 2
+    },
+    {
+      "passed": 42,
+      "total": 42,
+      "chunks": [
+        {
+          "label": "thread_bike_commute.txt#0",
+          "text": "THREAD: Is a bike worth it for a 20 minute walk commute?\n\n--- reply 1 (14 votes) ---\nYeah. Cuts an 18 minute walk to about 6. The thing nobody mentions is storage — covered bike parking exists at three buildings and is full by 9am at all three.\n\n--- reply 2 (9 votes) ---\nCounterpoint, I sold mine. Between November and March the paths are either icy or salted and salt destroys a drivetrain in one season.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Is a bike worth it for a 20 minute walk commute?",
+          "actual_heading": "THREAD: Is a bike worth it for a 20 minute walk commute?",
+          "passed": true
+        },
+        {
+          "label": "thread_bike_commute.txt#1",
+          "text": "THREAD: Is a bike worth it for a 20 minute walk commute?\n\nPrevious context: Between November and March the paths are either icy or salted and salt destroys a drivetrain in one season.\n\n--- reply 3 (22 votes) ---\nBoth true. I keep a cheap bike for September to November and walk the rest of the year. Total cost was about $120 for the bike and I don't care what happens to it.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Is a bike worth it for a 20 minute walk commute?",
+          "actual_heading": "THREAD: Is a bike worth it for a 20 minute walk commute?",
+          "passed": true
+        },
+        {
+          "label": "thread_bike_commute.txt#2",
+          "text": "THREAD: Is a bike worth it for a 20 minute walk commute?\n\nPrevious context: Total cost was about $120 for the bike and I don't care what happens to it.\n\n--- reply 4 (5 votes) ---\nIf you do get one, the campus does free registration and it's the only reason I got mine back after it was taken.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Is a bike worth it for a 20 minute walk commute?",
+          "actual_heading": "THREAD: Is a bike worth it for a 20 minute walk commute?",
+          "passed": true
+        },
+        {
+          "label": "thread_changing_major.txt#0",
+          "text": "THREAD: How hard is it to change major in second year?\n\n--- reply 1 (22 votes) ---\nAdministratively trivial — it's a form. The real question is whether the credits you've taken map onto the new requirements.\n\n--- reply 2 (27 votes) ---\nDepends enormously on the direction. Moving within the sciences is usually fine. Moving into a science from outside in your third year means an extra semester more often than not.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: How hard is it to change major in second year?",
+          "actual_heading": "THREAD: How hard is it to change major in second year?",
+          "passed": true
+        },
+        {
+          "label": "thread_changing_major.txt#1",
+          "text": "THREAD: How hard is it to change major in second year?\n\nPrevious context: Moving into a science from outside in your third year means an extra semester more often than not.\n\n--- reply 3 (19 votes) ---\nTalk to the department adviser for the major you want, not your current one. They know the exceptions.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: How hard is it to change major in second year?",
+          "actual_heading": "THREAD: How hard is it to change major in second year?",
+          "passed": true
+        },
+        {
+          "label": "thread_clubs.txt#0",
+          "text": "THREAD: How many clubs is too many?\n\n--- reply 1 (31 votes) ---\nTwo you actually turn up to beats six you signed up for at the fair.\n\n--- reply 2 (24 votes) ---\nThe club fair collects about four hundred email addresses per society and maybe thirty people ever appear. Don't feel bad about the signup sheet.\n\n--- reply 3 (18 votes) ---\nIf you want a leadership position later, depth in one is worth more than breadth across five.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: How many clubs is too many?",
+          "actual_heading": "THREAD: How many clubs is too many?",
+          "passed": true
+        },
+        {
+          "label": "thread_commuting.txt#0",
+          "text": "THREAD: Commuting an hour each way — is it survivable?\n\n--- reply 1 (26 votes) ---\nYes, but stack your courses. Three long days beats five short ones by a wide margin.\n\n--- reply 2 (21 votes) ---\nThe commuter lounge in the student centre has lockers you can rent for $20 a year and it changes the experience completely.\n\n--- reply 3 (13 votes) ---\nWatch the evening bus timetable before you register for anything that ends after 6pm.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Commuting an hour each way — is it survivable?",
+          "actual_heading": "THREAD: Commuting an hour each way — is it survivable?",
+          "passed": true
+        },
+        {
+          "label": "thread_commuting.txt#1",
+          "text": "THREAD: Commuting an hour each way — is it survivable?\n\nPrevious context: Watch the evening bus timetable before you register for anything that ends after 6pm.\n\n--- reply 4 (17 votes) ---\nI commuted for two years. The thing that made it work was treating the train as study time rather than dead time.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Commuting an hour each way — is it survivable?",
+          "actual_heading": "THREAD: Commuting an hour each way — is it survivable?",
+          "passed": true
+        },
+        {
+          "label": "thread_first_gen.txt#0",
+          "text": "THREAD: Anything specific for first-generation students?\n\n--- reply 1 (33 votes) ---\nThe advising office has a specific programme and it is genuinely good, but it is opt-in and badly publicised. Ask for it by name.\n\n--- reply 2 (41 votes) ---\nThe thing I'd say: the unwritten rules are the hard part, not the coursework. Ask about the unwritten rules explicitly. People are happy to explain them and nobody volunteers them.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Anything specific for first-generation students?",
+          "actual_heading": "THREAD: Anything specific for first-generation students?",
+          "passed": true
+        },
+        {
+          "label": "thread_first_gen.txt#1",
+          "text": "THREAD: Anything specific for first-generation students?\n\nPrevious context: People are happy to explain them and nobody volunteers them.\n\n--- reply 3 (16 votes) ---\nEmergency fund for textbooks and travel exists and is not means-tested beyond a short form.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Anything specific for first-generation students?",
+          "actual_heading": "THREAD: Anything specific for first-generation students?",
+          "passed": true
+        },
+        {
+          "label": "thread_first_year_regret.txt#0",
+          "text": "THREAD: What do you wish you'd known in first year?\n\n--- reply 1 (41 votes) ---\nThat the add/drop deadline and the withdrawal deadline are different dates and only one of them is on the calendar everyone reads.\n\n--- reply 2 (28 votes) ---\nThat you can take a course pass/fail and declare it late — up to week eight. I carried a grade I didn't need to.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: What do you wish you'd known in first year?",
+          "actual_heading": "THREAD: What do you wish you'd known in first year?",
+          "passed": true
+        },
+        {
+          "label": "thread_first_year_regret.txt#1",
+          "text": "THREAD: What do you wish you'd known in first year?\n\nPrevious context: I carried a grade I didn't need to.\n\n--- reply 3 (35 votes) ---\nThat the writing centre will read a draft for any course, not just writing courses. Free, and the appointments go unbooked.\n\n--- reply 4 (52 votes) ---\nHonestly: that nobody is watching as closely as you think. I spent a year worried about looking like I knew what I was doing.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: What do you wish you'd known in first year?",
+          "actual_heading": "THREAD: What do you wish you'd known in first year?",
+          "passed": true
+        },
+        {
+          "label": "thread_first_year_regret.txt#2",
+          "text": "THREAD: What do you wish you'd known in first year?\n\nPrevious context: I spent a year worried about looking like I knew what I was doing.\n\n--- reply 5 (17 votes) ---\nThat your adviser's job is partly to know the exceptions to rules. Ask before assuming a deadline is fixed.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: What do you wish you'd known in first year?",
+          "actual_heading": "THREAD: What do you wish you'd known in first year?",
+          "passed": true
+        },
+        {
+          "label": "thread_group_project.txt#0",
+          "text": "THREAD: How do you handle a group project where someone disappears?\n\n--- reply 1 (29 votes) ---\nDocument early. Not to be difficult — because if you go to the instructor in week 10 with nothing written down, there's nothing they can do.\n\n--- reply 2 (22 votes) ---\nMost instructors here will adjust individual grades if you raise it before the deadline rather than after. After is too late, consistently.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: How do you handle a group project where someone disappears?",
+          "actual_heading": "THREAD: How do you handle a group project where someone disappears?",
+          "passed": true
+        },
+        {
+          "label": "thread_group_project.txt#1",
+          "text": "THREAD: How do you handle a group project where someone disappears?\n\nPrevious context: After is too late, consistently.\n\n--- reply 3 (16 votes) ---\nSplit work into pieces that can be handed off. If one person's part is load-bearing for everyone else, one disappearance sinks it.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: How do you handle a group project where someone disappears?",
+          "actual_heading": "THREAD: How do you handle a group project where someone disappears?",
+          "passed": true
+        },
+        {
+          "label": "thread_internship_timing.txt#0",
+          "text": "THREAD: When should I start looking for a summer internship?\n\n--- reply 1 (30 votes) ---\nEarlier than feels reasonable. Large employers close applications in October and November for the following summer.\n\n--- reply 2 (25 votes) ---\nSmaller and local places hire in February and March, so if you missed autumn you have not missed everything.\n\n--- reply 3 (19 votes) ---\nThe careers office reviews CVs on a drop-in basis and the queue is almost never longer than one person.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: When should I start looking for a summer internship?",
+          "actual_heading": "THREAD: When should I start looking for a summer internship?",
+          "passed": true
+        },
+        {
+          "label": "thread_laptop_specs.txt#0",
+          "text": "THREAD: How much laptop do I actually need for CS courses?\n\n--- reply 1 (31 votes) ---\nLess than the recommended spec page says. 16GB of RAM is the one number worth paying for; everything else you'll never notice.\n\n--- reply 2 (18 votes) ---\nAdding: the lab machines exist and are better than anything you'll buy. For the heavy assignments people just use those.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: How much laptop do I actually need for CS courses?",
+          "actual_heading": "THREAD: How much laptop do I actually need for CS courses?",
+          "passed": true
+        },
+        {
+          "label": "thread_laptop_specs.txt#1",
+          "text": "THREAD: How much laptop do I actually need for CS courses?\n\nPrevious context: For the heavy assignments people just use those.\n\n--- reply 3 (12 votes) ---\nI did two years on an 8GB machine and it was fine until the last project, at which point it very much wasn't. 16 is the answer.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: How much laptop do I actually need for CS courses?",
+          "actual_heading": "THREAD: How much laptop do I actually need for CS courses?",
+          "passed": true
+        },
+        {
+          "label": "thread_late_work.txt#0",
+          "text": "THREAD: What actually happens if you hand something in late?\n\n--- reply 1 (20 votes) ---\nEntirely instructor-dependent and the syllabus is accurate. If it says 10% a day, it's 10% a day.\n\n--- reply 2 (47 votes) ---\nThe universal rule: ask before the deadline, not after. Almost everyone will give you two days if you ask on Wednesday for a Friday deadline. Almost nobody will on the following Monday.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: What actually happens if you hand something in late?",
+          "actual_heading": "THREAD: What actually happens if you hand something in late?",
+          "passed": true
+        },
+        {
+          "label": "thread_late_work.txt#1",
+          "text": "THREAD: What actually happens if you hand something in late?\n\nPrevious context: Almost nobody will on the following Monday.\n\n--- reply 3 (15 votes) ---\nDocumented illness goes through the dean of students rather than the instructor, and that route works.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: What actually happens if you hand something in late?",
+          "actual_heading": "THREAD: What actually happens if you hand something in late?",
+          "passed": true
+        },
+        {
+          "label": "thread_laundry_timing.txt#0",
+          "text": "THREAD: When is laundry actually free in the dorms?\n\n--- reply 1 (27 votes) ---\nTuesday and Wednesday mornings, every building. Sunday evening is the worst and it isn't close.\n\n--- reply 2 (8 votes) ---\nDepends heavily on your building. Morrow has more machines per person than Fenwick so it's less of a problem there.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: When is laundry actually free in the dorms?",
+          "actual_heading": "THREAD: When is laundry actually free in the dorms?",
+          "passed": true
+        },
+        {
+          "label": "thread_laundry_timing.txt#1",
+          "text": "THREAD: When is laundry actually free in the dorms?\n\nPrevious context: Morrow has more machines per person than Fenwick so it's less of a problem there.\n\n--- reply 3 (16 votes) ---\nThe app that shows machine availability is wrong about half the time. It reports a machine as free for a few minutes after it finishes but before someone unloads it.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: When is laundry actually free in the dorms?",
+          "actual_heading": "THREAD: When is laundry actually free in the dorms?",
+          "passed": true
+        },
+        {
+          "label": "thread_meal_plan_tier.txt#0",
+          "text": "THREAD: Which meal plan tier is right?\n\n--- reply 1 (24 votes) ---\nDepends entirely on whether your building has a kitchen. Fenwick has kitchenettes, so people there go down a tier and cook two or three nights. Everywhere else, get the middle tier.\n\n--- reply 2 (19 votes) ---\nThe highest tier only makes sense if you eat three meals a day in the halls every single day, which basically nobody does past October.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Which meal plan tier is right?",
+          "actual_heading": "THREAD: Which meal plan tier is right?",
+          "passed": true
+        },
+        {
+          "label": "thread_meal_plan_tier.txt#1",
+          "text": "THREAD: Which meal plan tier is right?\n\nPrevious context: The highest tier only makes sense if you eat three meals a day in the halls every single day, which basically nobody does past October.\n\n--- reply 3 (11 votes) ---\nRemember you can only change it once and only in the first ten days. I waited and got stuck on a plan I didn't use.\n\n--- reply 4 (7 votes) ---\nDeclining balance rolls within the semester but not between them. Spend it in December or lose it.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Which meal plan tier is right?",
+          "actual_heading": "THREAD: Which meal plan tier is right?",
+          "passed": true
+        },
+        {
+          "label": "thread_office_hours_etiquette.txt#0",
+          "text": "THREAD: Is it weird to go to office hours with no specific question?\n\n--- reply 1 (44 votes) ---\nNo, and this is the single most common thing first years get wrong. 'I'm following the lectures but I don't feel like I understand the shape of it' is a completely normal thing to say.\n\n--- reply 2 (29 votes) ---\nThey're usually empty. You are doing the instructor a favour by turning up.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Is it weird to go to office hours with no specific question?",
+          "actual_heading": "THREAD: Is it weird to go to office hours with no specific question?",
+          "passed": true
+        },
+        {
+          "label": "thread_office_hours_etiquette.txt#1",
+          "text": "THREAD: Is it weird to go to office hours with no specific question?\n\nPrevious context: You are doing the instructor a favour by turning up.\n\n--- reply 3 (18 votes) ---\nIf it helps, treat it as a standing appointment. Go every week for a month and it stops feeling like a thing.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Is it weird to go to office hours with no specific question?",
+          "actual_heading": "THREAD: Is it weird to go to office hours with no specific question?",
+          "passed": true
+        },
+        {
+          "label": "thread_parking.txt#0",
+          "text": "THREAD: Worth getting a parking permit?\n\n--- reply 1 (15 votes) ---\nWest lots sell out in about three days in August. East lot never sells out but it's a 12 minute walk, at which point you might as well have parked on the street.\n\n--- reply 2 (21 votes) ---\nStreet parking on Verrill is legal and free and unmarked, which is why half the upper years do it.\n\n--- reply 3 (8 votes) ---\nIf you're commuting daily, the west permit is worth the August scramble. Otherwise don't bother.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Worth getting a parking permit?",
+          "actual_heading": "THREAD: Worth getting a parking permit?",
+          "passed": true
+        },
+        {
+          "label": "thread_pass_fail.txt#0",
+          "text": "THREAD: When should you actually use the pass/fail option?\n\n--- reply 1 (24 votes) ---\nFor a course outside your major that you're taking because you're curious. That's what it's for and most people never use it.\n\n--- reply 2 (38 votes) ---\nThe part that isn't advertised: you can declare it as late as week eight. So take the midterm first, then decide.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: When should you actually use the pass/fail option?",
+          "actual_heading": "THREAD: When should you actually use the pass/fail option?",
+          "passed": true
+        },
+        {
+          "label": "thread_pass_fail.txt#1",
+          "text": "THREAD: When should you actually use the pass/fail option?\n\nPrevious context: So take the midterm first, then decide.\n\n--- reply 3 (20 votes) ---\nCareful with this one if you're applying to graduate programmes. Some want a letter grade for prerequisites and a P doesn't satisfy it.\n\n--- reply 4 (12 votes) ---\nTwo per year and eight across the degree. I hit the annual limit in second year and regretted spending one on an easy course.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: When should you actually use the pass/fail option?",
+          "actual_heading": "THREAD: When should you actually use the pass/fail option?",
+          "passed": true
+        },
+        {
+          "label": "thread_printing.txt#0",
+          "text": "THREAD: Is the printing quota enough?\n\n--- reply 1 (17 votes) ---\nFor most people yes. $30 is about 600 pages black and white. It's the colour printing that eats it — eight times the cost per page.\n\n--- reply 2 (11 votes) ---\nDoesn't roll over between semesters. Print your readings in December rather than losing it.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Is the printing quota enough?",
+          "actual_heading": "THREAD: Is the printing quota enough?",
+          "passed": true
+        },
+        {
+          "label": "thread_professor_email.txt#0",
+          "text": "THREAD: Do professors actually answer email?\n\n--- reply 1 (21 votes) ---\nVaries enormously. General rule I've found: if the syllabus states a response window, it's honoured. If it doesn't, assume 48 hours and don't panic before then.\n\n--- reply 2 (33 votes) ---\nOffice hours are dramatically more effective than email for anything that takes more than two sentences to answer. They're also usually empty.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Do professors actually answer email?",
+          "actual_heading": "THREAD: Do professors actually answer email?",
+          "passed": true
+        },
+        {
+          "label": "thread_professor_email.txt#1",
+          "text": "THREAD: Do professors actually answer email?\n\nPrevious context: They're also usually empty.\n\n--- reply 3 (15 votes) ---\nEmpty office hours is the biggest unused resource here and I say that having wasted a year not going.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Do professors actually answer email?",
+          "actual_heading": "THREAD: Do professors actually answer email?",
+          "passed": true
+        },
+        {
+          "label": "thread_roommate_conflict.txt#0",
+          "text": "THREAD: Roommate situation isn't working. What now?\n\n--- reply 1 (28 votes) ---\nTalk to your RA early, and frame it as 'we need help sorting this out' rather than 'move me'. Room changes are possible but the process starts with mediation and skipping that step slows it down.\n\n--- reply 2 (14 votes) ---\nRoom changes happen at the semester boundary almost always, and mid-semester only in fairly serious cases.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Roommate situation isn't working. What now?",
+          "actual_heading": "THREAD: Roommate situation isn't working. What now?",
+          "passed": true
+        },
+        {
+          "label": "thread_roommate_conflict.txt#1",
+          "text": "THREAD: Roommate situation isn't working. What now?\n\nPrevious context: Room changes happen at the semester boundary almost always, and mid-semester only in fairly serious cases.\n\n--- reply 3 (33 votes) ---\nWrite down specifics before the meeting. 'It's not working' is hard to act on; 'guests four nights a week past 2am' is not.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Roommate situation isn't working. What now?",
+          "actual_heading": "THREAD: Roommate situation isn't working. What now?",
+          "passed": true
+        },
+        {
+          "label": "thread_sleep_schedule.txt#0",
+          "text": "THREAD: Everyone says fix your sleep. Does it actually matter?\n\n--- reply 1 (29 votes) ---\nYes, and the specific thing that helped me was scheduling no classes before 10am rather than trying to become a morning person.\n\n--- reply 2 (37 votes) ---\nThe library being open until 2am is a trap. It's a resource, not a schedule.\n\n--- reply 3 (16 votes) ---\nCounselling runs a short workshop on this that is more practical than it sounds. Four sessions, and it's free.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Everyone says fix your sleep. Does it actually matter?",
+          "actual_heading": "THREAD: Everyone says fix your sleep. Does it actually matter?",
+          "passed": true
+        },
+        {
+          "label": "thread_study_spots.txt#0",
+          "text": "THREAD: Best study spots that aren't the library?\n\n--- reply 1 (23 votes) ---\nRidgeway Café before 10am. Empty, quiet, good coffee, and they don't push you out.\n\n--- reply 2 (19 votes) ---\nThe science building has open lounges on floors 2 through 5 that are unlocked and almost always empty.\n\n--- reply 3 (14 votes) ---\nDepends what you need. If you need silence, the library third floor is the only place that reliably delivers it.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Best study spots that aren't the library?",
+          "actual_heading": "THREAD: Best study spots that aren't the library?",
+          "passed": true
+        },
+        {
+          "label": "thread_study_spots.txt#1",
+          "text": "THREAD: Best study spots that aren't the library?\n\nPrevious context: If you need silence, the library third floor is the only place that reliably delivers it.\n\n--- reply 4 (9 votes) ---\nThe group study rooms in the library can be booked by one person and used alone. Nobody checks.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Best study spots that aren't the library?",
+          "actual_heading": "THREAD: Best study spots that aren't the library?",
+          "passed": true
+        },
+        {
+          "label": "thread_textbook_editions.txt#0",
+          "text": "THREAD: Does the edition of the textbook matter?\n\n--- reply 1 (23 votes) ---\nFor maths and physics, almost never — problem numbering shifts and that's it. For anything where the field moves, it can matter a lot.\n\n--- reply 2 (34 votes) ---\nAsk the instructor directly. Most will tell you the previous edition is fine, and they can't put that in the syllabus for procurement reasons.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Does the edition of the textbook matter?",
+          "actual_heading": "THREAD: Does the edition of the textbook matter?",
+          "passed": true
+        },
+        {
+          "label": "thread_textbook_editions.txt#1",
+          "text": "THREAD: Does the edition of the textbook matter?\n\nPrevious context: Most will tell you the previous edition is fine, and they can't put that in the syllabus for procurement reasons.\n\n--- reply 3 (12 votes) ---\nThe library reserve copy is always the current edition, so you can check the numbering against yours for free.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Does the edition of the textbook matter?",
+          "actual_heading": "THREAD: Does the edition of the textbook matter?",
+          "passed": true
+        },
+        {
+          "label": "thread_transfer_credits.txt#0",
+          "text": "THREAD: Do transfer credits actually count toward the major?\n\n--- reply 1 (20 votes) ---\nToward general requirements almost always. Toward the major it's case-by-case and the department decides, not the registrar.\n\n--- reply 2 (25 votes) ---\nGet it in writing from the department before you rely on it. I had a verbal yes that didn't survive a staff change.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Do transfer credits actually count toward the major?",
+          "actual_heading": "THREAD: Do transfer credits actually count toward the major?",
+          "passed": true
+        },
+        {
+          "label": "thread_transfer_credits.txt#1",
+          "text": "THREAD: Do transfer credits actually count toward the major?\n\nPrevious context: I had a verbal yes that didn't survive a staff change.\n\n--- reply 3 (13 votes) ---\nThe credit hours count for registration priority and the housing lottery even when they don't count toward the major, which is worth knowing.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: Do transfer credits actually count toward the major?",
+          "actual_heading": "THREAD: Do transfer credits actually count toward the major?",
+          "passed": true
+        },
+        {
+          "label": "thread_winter_advice.txt#0",
+          "text": "THREAD: First winter here — what do I need?\n\n--- reply 1 (26 votes) ---\nLayers, not a big coat. The buildings are overheated and you'll carry a parka around all day.\n\n--- reply 2 (31 votes) ---\nBoots with actual tread. The path past the pond ices over and people go down on it every year.\n\n--- reply 3 (18 votes) ---\nGet a light that clips to your bag. It's dark by 4:30 in December and parts of the walk from Fenwick aren't lit well.",
+          "produced_by": "chunker.py::split_documents",
+          "expected_heading": "THREAD: First winter here — what do I need?",
+          "actual_heading": "THREAD: First winter here — what do I need?",
+          "passed": true
+        }
+      ],
+      "run": 3
+    }
+  ],
+  "usage": "15 model calls this session, 7802 tokens (7188 in, 614 out)",
+  "finished_at_utc": "2026-10-04T19:57:32.330778+00:00"
+}
