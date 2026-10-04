@@ -392,22 +392,54 @@ or future response times. No improvement has been made in Milestone 1.
 
 ## Verdicts
 
-<!-- MET or MISSED for each of the five, against the target you wrote last
-     unit — not a new one. Plus a sentence on how you decided. That sentence
-     matters most where it was close.
-
-     If your target said 4 of 5 and your runs came out 4, 3, 4, that's a MISS.
-     The target has to hold, not show up occasionally.
-
-     Milestone 2. -->
+These calls use the original targets in [criteria.md](criteria.md) and the
+Milestone 1 baseline above. A target must hold in every run; averaging the
+three runs would not rescue a miss. No criterion or target has been revised.
 
 | # | Criterion | Verdict | How I decided |
 |---|---|---|---|
-| 1 |  |  |  |
-| 2 |  |  |  |
-| 3 |  |  |  |
-| 4 |  |  |  |
-| 5 |  |  |  |
+| 1 | Retrieved chunks contain the answer | MET | The top three results contained an answer-bearing chunk for 5/5 questions in each of the three runs, exceeding the original minimum of 4/5 every time; I checked the saved chunk text, not just the distance or source filename. |
+| 2 | Every answer names a source | MET | All five generated answers in each run named at least one retrieved source document in their own answer text (15/15 total), meeting the requirement for every answer; I did not count the report's separate list of retrieved sources as a citation. |
+| 3 | The relevance gate stops out-of-corpus questions | MET | The gate refused 5/5 unrelated questions, exceeding the original 4/5 target: all best distances (0.8097–0.9290) exceeded 0.60, and the failed-gate branch in `run_eval.py::run_once` returns `gate.py::REFUSAL`; the prescribed deterministic measurement is repeated as 5/5 in all three columns, not treated as 15 independent trials. |
+| 4 | Every chunk retains its thread question | MET | Each of the three full-index audits found 42/42 chunks beginning with the exact `THREAD:` question line from its source document, including continuation chunks, so there were no exceptions to the original “every chunk” target. |
+| 5 | The complete workflow is fast | MET | All five uncached questions finished within 10 seconds in each run (15/15 total); the slowest individual call took 1.921352 seconds, measured immediately before the original `run_eval.py::run_once` began until it returned, including the first query's initialization. |
+
+### Challenging these calls
+
+I considered the strongest argument for MISSED for each criterion before
+keeping these verdicts:
+
+- **1:** The deadline answers omit the expected `syllabus` phrase, and the
+  relevant deadline and library chunks rank third rather than first. However,
+  the original criterion asks whether the retrieved chunks contain the answer;
+  the saved top-three text contains both the syllabus advice and the 2am
+  library fact in every run. Neither first-place ranking nor generated-answer
+  completeness is its target.
+- **2:** Merely naming a filename does not prove an answer is accurate or fully
+  supported. That is a limit of this criterion, but all 15 answers do name an
+  actual retrieved document, satisfying its observable source-naming target.
+- **3:** The out-of-scope report records gate decisions rather than returned
+  refusal text, and it runs once. The assignment explicitly prescribes that
+  deterministic measurement; inspecting the unchanged failed-gate branch
+  confirms that it returns `I don't have enough information about that.`
+  This is a gate measurement plus a code-path check, not a claim that the
+  report captured five end-to-end refusal responses.
+- **4:** Five sample chunks would not establish “every chunk,” and regenerated
+  chunks would not necessarily establish what the system searches. These
+  audits instead read all 42 chunks from the existing index and compare each
+  heading with its source, so neither objection applies to the saved evidence.
+- **5:** An average below 10 seconds could conceal a slow response, and cached
+  answers could make the workflow look faster. Here every individual duration
+  is below the limit, and the session recorded 15 real model calls with caching
+  disabled. Future network or model delays remain untested by this baseline.
+
+The speed result has the largest margin against its target: the original
+10-second allowance accounts for ordinary model-response variation, but even
+the slowest observed call was under two seconds. The individual timings and
+model-call count support MET for this
+baseline without establishing a guarantee for future runs. All five verdicts
+remain MET against the filed targets; the answer-completeness limitation stays
+visible without changing a criterion.
 
 ## Diagnoses
 
