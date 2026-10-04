@@ -443,23 +443,81 @@ visible without changing a criterion.
 
 ## Diagnoses
 
-<!-- For each miss: which stage caused it, and how. The stage alone isn't
-     enough — you need the mechanism.
+**No filed criterion was missed.** All five targets held in every measured
+run, so there are no acceptance-criterion failures to assign to a pipeline
+stage. The original verdicts and targets remain unchanged.
 
-     Not a diagnosis: "Question 3 didn't work."
-     A diagnosis:     "Question 3 asks about laundry costs. The answer is in
-                       one sentence that got split across two chunks, so
-                       neither chunk on its own contains it."
+### Were the targets too safe?
 
-     The five stages: loading → chunking → embedding → retrieval → generation.
+Some were. Criterion 1 allows one retrieval miss among five familiar questions
+and accepts an answer anywhere in the top three results. Criterion 3 tests
+questions from clearly unrelated domains, with a large distance gap from the
+cutoff; it does not challenge the gate with questions that sound like student
+advice but ask for facts absent from the corpus. Criterion 5's 10-second limit
+had substantial room above the slowest observed response of 1.921352 seconds.
+Criteria 2 and 4 demand 100% compliance, but they check narrow properties:
+naming a source and retaining a heading. Neither proves that an answer includes
+the important advice or uses the source accurately. These passes establish a
+working baseline, not an excellent system.
 
-     Look for a pattern. If three misses all ask about numbers, that's one
-     problem, not three.
+**The criterion I would tighten in a future evaluation is criterion 2:**
+for all five questions in each of three uncached runs, every answer must name
+a retrieved source **and include the expected fact already recorded in
+`questions.py`, supported by that source**. I would judge the fact semantically,
+so a paraphrase of getting department approval in writing would count. The
+deadline answer would need to mention checking the syllabus or its
+instructor-specific late-work policy. This is a proposed future standard,
+not a revision to `criteria.md` or the current before/after scoring. Against
+that additional completeness requirement, the saved baseline would be 4/5
+in each run because all three deadline answers omit that detail.
 
-     Missed nothing? Say so, then say honestly whether your targets were set
-     low, and which one you'd tighten and to what.
+### A limitation the passing criteria did not catch
 
-     Milestone 3. -->
+**Question:** `What to do if I cannot finish my assignment by deadline?`
+
+**Actual answer, run 3** — `generate.py::answer_from_chunks`, saved in
+[the baseline report](results/run_2026-10-04_1527_before.md):
+
+```text
+You should ask for an extension before the deadline rather than after, as almost everyone will grant extra time if asked beforehand.
+
+Source: `thread_late_work.txt`
+```
+
+**Retrieved evidence** — `thread_late_work.txt#0`, returned by
+`store.py::search` in all three runs and saved in
+[the supplementary evidence](results/milestone1_before_evidence.json):
+
+```text
+--- reply 1 (20 votes) ---
+Entirely instructor-dependent and the syllabus is accurate. If it says 10% a day, it's 10% a day.
+```
+
+Working backwards gives three possible causes at different stages:
+
+| Possible stage and mechanism | What the saved evidence shows |
+|---|---|
+| Loading: the syllabus advice was removed while reading or cleaning the document. | The exact advice survives in the indexed and retrieved text, so loading did not lose it. |
+| Retrieval: the relevant chunk did not reach the model, leaving it only generic deadline advice. | The relevant chunk is third in all three results, and `generate.py::build_prompt` includes every retrieved chunk, so the model received it. |
+| Generation: the model selected extension advice but omitted the accompanying instructor-specific policy. | The advice was available in the prompt, yet none of the three answers mentions the syllabus or the instructor-dependent policy. The omission occurs when producing the answer. |
+
+**Stage: generation. Mechanism:** The model condenses the supplied replies into
+an extension recommendation without carrying over the policy qualification.
+`generate.py::GROUNDING_INSTRUCTION` asks for brevity (usually two or three
+sentences), source naming, and grounding, but does not require coverage of
+important qualifications. That prompt design is a plausible contributor to
+the omission, not a proven causal explanation; changing it and measuring again
+would test the hypothesis. Run 1 also uses space for group-project advice from
+a different retrieved thread, even though the question does not specify a
+group project.
+
+The pattern is the same missing qualification in all three deadline answers,
+not three unrelated errors. The other four questions' answers include their
+expected facts in all three runs. This supports investigating generation's
+selection of relevant details rather than rebuilding the corpus or chunker.
+The deadline answer still gives supported advice, so this is a completeness
+limitation relative to the recorded expectation, not a fabricated miss of the
+original criteria. No system improvement has been made in Milestone 3.
 
 ## The Improvement
 
