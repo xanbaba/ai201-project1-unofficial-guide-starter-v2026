@@ -218,27 +218,177 @@ sentence of prior context in continuation chunks.
 
 ## Run Log — Before
 
-<!-- Your five criteria, three runs each. `python run_eval.py --label before`
-     runs the questions, puts the OUT_OF_SCOPE ones through the gate, and
-     writes it all into results/ for you. Targets come from criteria.md; the
-     verdict column is your call.
+Measured on October 4, 2026 (America/New_York), against the unchanged targets
+in [criteria.md](criteria.md). Preparation: `.venv\Scripts\python.exe test.py`
+passed all 10 environment checks, and `app.py ask "Can I change my meal plan?"`
+confirmed the existing index works. That preparation answer came from cache;
+it is not counted in the evaluation.
 
-     Criterion 3 is measured in one deterministic pass rather than three, so
-     the same number goes in all three run columns. That's correct, not lazy.
+Evaluation command: `.venv\Scripts\python.exe tools/milestone1_eval.py`.
+This measurement wrapper calls `run_eval.py::main` with `--label before`,
+times the original `run_eval.py::run_once` immediately before entry until its
+return, and saves every retrieved chunk alongside every answer. It also reads
+all existing indexed chunks three times to check their exact thread headings.
+It changes no pipeline code, settings, corpus, model, or index. The baseline
+uses 42 chunks, `TOP_K = 3`, and cutoff 0.60.
 
-     Milestone 1. -->
+Evidence: [full answer and gate report](results/run_2026-10-04_1527_before.md),
+[retrieved text, timings, and complete chunk audits](results/milestone1_before_evidence.json),
+and [measurement wrapper](tools/milestone1_eval.py). No `scorer.py` exists, so
+I judged retrieval and source naming by reading the captured text. The blank
+question-level scores in the generated report are not failures.
 
 | Criterion | Target | Run 1 | Run 2 | Run 3 | Verdict |
 |---|---|---|---|---|---|
-| 1. Retrieved chunk contains the answer | 4 of 5 |  |  |  |  |
-| 2. Every answer names a source | 5 of 5 |  |  |  |  |
-| 3. Gate stops out-of-corpus questions | 4 of 5 |  |  |  |  |
-| 4. | | | | | |
-| 5. | | | | | |
+| 1. Retrieved chunks contain the answer | At least 4 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 2. Every answer names a source | 5 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 3. Gate stops out-of-corpus questions | At least 4 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 4. Every chunk retains its exact source thread question | All 42 chunks | 42/42 | 42/42 | 42/42 | MET |
+| 5. The complete workflow is fast | Every question within 10 seconds | 5/5 | 5/5 | 5/5 | MET |
 
-<!-- Underneath, paste the REAL output for each criterion from one of your
-     runs — the actual text your system produced, not a description of it.
-     Name the file and function that produced it. -->
+Criterion 1 counts retrieved evidence, not whether the generated answer uses
+every expected detail. In all three runs, the retrieved chunks contained the
+syllabus and extension advice, Ridgeway Café, written department confirmation,
+the first-ten-days meal-plan restriction, and the library's 2am closing time.
+Criterion 2 checks the model's own answer text for a source filename; a separate
+"Sources retrieved" line alone would not count. All 15 answers named a
+retrieved source. Criterion 3 repeats the one deterministic gate measurement
+in all three columns, as instructed. Criterion 4 checks every stored chunk,
+including continuation chunks, against the first line of its source document.
+Criterion 5 includes first-query initialization, retrieval, and generation;
+the index was already built and there was no untimed warm-up inside the
+evaluation process.
+
+All criterion counts match across runs, but caching was disabled explicitly by
+`run_eval.py::run_once` (`cache=False`). The session reported **15 model calls**
+and no cache hits, and answer wording varied between trials. Retrieval and
+chunk headings were deterministic.
+
+### Criterion 1 — retrieved answer evidence
+
+Actual run 1 retrieval for the deadline question, from
+`store.py::search`; this chunk was originally produced by
+`chunker.py::split_documents`. Saved in
+`results/milestone1_before_evidence.json`, trial 1, `results`.
+Source: `thread_late_work.txt#0`.
+
+```text
+THREAD: What actually happens if you hand something in late?
+
+--- reply 1 (20 votes) ---
+Entirely instructor-dependent and the syllabus is accurate. If it says 10% a day, it's 10% a day.
+
+--- reply 2 (47 votes) ---
+The universal rule: ask before the deadline, not after. Almost everyone will give you two days if you ask on Wednesday for a Friday deadline. Almost nobody will on the following Monday.
+```
+
+The following retrieved chunks contain the expected information in each run:
+
+| Question topic | Chunk containing the answer |
+|---|---|
+| Assignment deadline | `thread_late_work.txt#0` |
+| Study spot with coffee | `thread_study_spots.txt#0` |
+| Verbal transfer-credit approval | `thread_transfer_credits.txt#0` |
+| Meal-plan change | `thread_meal_plan_tier.txt#1` |
+| Library closing time | `thread_sleep_schedule.txt#0` |
+
+### Criterion 2 — answer names a source
+
+Actual meal-plan answer, run 1. Produced by
+`generate.py::answer_from_chunks`, called by `run_eval.py::run_once`, and saved
+by `run_eval.py::write_report` in `results/run_2026-10-04_1527_before.md`.
+
+```text
+Yes, you can change your meal plan, but you can only change it once and only in the first ten days (thread_meal_plan_tier.txt).
+```
+
+### Criterion 3 — out-of-corpus gate output
+
+Actual console output from `run_eval.py::check_out_of_scope`, which uses
+`store.py::search` and `gate.py::check`. The same distances and decisions are
+saved by `run_eval.py::write_report` in
+`results/run_2026-10-04_1527_before.md`. These checks stop at the gate and do not
+call the model.
+
+```text
+Out-of-scope questions (the gate should refuse these):
+  refused  (best distance 0.9290)  What is the capital of Mongolia?
+  refused  (best distance 0.9121)  How do I change the oil in a diesel engine?
+  refused  (best distance 0.9165)  Who won the 1994 World Cup?
+  refused  (best distance 0.8097)  What is the recommended dosage of ibuprofen for a headache?
+  refused  (best distance 0.8712)  How do I write a for loop in Rust?
+  -> gate refused 5 of 5
+```
+
+`gate.py::REFUSAL` is `I don't have enough information about that.`;
+`run_eval.py::run_once` returns that string on a failed gate. The assignment's
+out-of-scope measurement uses `check_out_of_scope`, so its actual output above
+records the refusal decision rather than printing the refusal string.
+
+### Criterion 4 — exact thread headings
+
+Actual console output from `tools/milestone1_eval.py::main`, using
+`tools/milestone1_eval.py::audit_chunks`. Full expected and actual headings,
+chunk text, and individual outcomes are saved in
+`results/milestone1_before_evidence.json`, `chunk_audits`.
+
+```text
+Chunk headings run 1: 42/42
+Chunk headings run 2: 42/42
+Chunk headings run 3: 42/42
+```
+
+Actual indexed continuation chunk `thread_meal_plan_tier.txt#1`, originally
+produced by `chunker.py::split_documents`, read from the existing Chroma
+collection by `tools/milestone1_eval.py::audit_chunks`:
+
+```text
+THREAD: Which meal plan tier is right?
+
+Previous context: The highest tier only makes sense if you eat three meals a day in the halls every single day, which basically nobody does past October.
+
+--- reply 3 (11 votes) ---
+Remember you can only change it once and only in the first ten days. I waited and got stuck on a plan I didn't use.
+
+--- reply 4 (7 votes) ---
+Declining balance rolls within the semester but not between them. Spend it in December or lose it.
+```
+
+### Criterion 5 — complete workflow timings
+
+Measured by `tools/milestone1_eval.py::main`'s `measured_run_once` wrapper using
+`time.perf_counter` around the original `run_eval.py::run_once`. Raw seconds
+are saved in `results/milestone1_before_evidence.json`, `trials`;
+the table displays them rounded to six decimal places.
+
+| Question topic | Run 1 (seconds) | Run 2 (seconds) | Run 3 (seconds) |
+|---|---|---|---|
+| Assignment deadline | 1.921352 | 0.714774 | 0.686277 |
+| Study spot with coffee | 0.605632 | 0.533877 | 0.510164 |
+| Verbal transfer-credit approval | 0.511352 | 0.561281 | 0.598528 |
+| Meal-plan change | 0.604303 | 0.588195 | 0.553622 |
+| Library closing time | 0.586536 | 0.463852 | 0.598329 |
+
+Actual first-trial console output from the timing wrapper:
+
+```text
+  elapsed: 1.921352 seconds
+```
+
+Actual evaluation session accounting from `generate.py::usage`, printed by
+`run_eval.py::write_report` and saved in the supplementary JSON:
+
+```text
+15 model calls this session, 7220 tokens (6648 in, 572 out)
+```
+
+**Observation for later milestones:** The deadline chunk contains the expected
+`syllabus` detail, but none of the three deadline answers mentions it. That
+does not fail any of the five filed criteria: retrieval contains the answer,
+source naming is present, and there is no separate answer-completeness target.
+It does show a limitation that these passing counts do not measure. These
+results describe this five-question baseline, not a guarantee for new questions
+or future response times. No improvement has been made in Milestone 1.
 
 ## Verdicts
 
