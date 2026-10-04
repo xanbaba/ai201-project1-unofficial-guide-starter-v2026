@@ -203,6 +203,35 @@ I changed `split_documents` to keep whole replies together up to 500
 characters, repeat the `THREAD:` question in every chunk, and retain one
 sentence of prior context in continuation chunks.
 
+### Unit 2 additions
+
+**3. Evaluating and diagnosing:** I asked Codex to complete the baseline
+evaluation against the criteria I had already filed. It captured three
+uncached runs, full retrieved text, response timings, and complete chunk
+audits. It identified a pattern the passing criteria hid: every deadline
+answer omitted the syllabus qualification even though the retrieved chunk
+contained it. I kept the original targets and approved a general prompt
+instruction to preserve relevant qualifications. The measured prompt-only
+experiment did not fix that omission, and its 69.9-second trial stayed in the
+evidence rather than being replaced by a faster run.
+
+**4. Inspecting retrieval instead of tailoring answers:** I challenged the
+idea of making the prompt specific to my questions and asked why the most
+useful deadline source appeared last. Codex inspected the saved distances
+and distinguished the report's alphabetized source list from actual retrieval
+order: the late-work chunk really ranked third. I requested BM25 hybrid
+search. Codex implemented rank fusion and measured it; the deadline chunk
+stayed third and the library answer chunk dropped out. I kept that regression
+visible instead of assuming the added search method was an improvement.
+
+**5. Testing my configuration change:** I changed the chunk limit to 900,
+sentence overlap to two, and top-k to five, then asked Codex to read
+`RUNNING.md`, rebuild the index, and update the after log. It found that all
+23 threads fit in single chunks and that library answers recovered in all
+three runs. The write-up records both the recovery and the doubled input-token
+count, and calls this a combined configuration experiment rather than
+attributing the result to chunking alone. All original criteria remain intact.
+
 <!-- ── Stretch features ─────────────────────────────────────────────────────
      Doing one? Say so here BEFORE you start. A feature this README never
      claims earns nothing.
@@ -895,17 +924,66 @@ files were not altered.
 
 ## What's Still Broken
 
-<!-- For each criterion still missed after your fix: what you'd do about it,
-     and why you stopped where you did.
+**No original criterion is still missed in the current after run.** The
+900-character index with hybrid retrieval and top-k five meets all five
+targets in every measured run. That does not mean every issue was fixed:
 
-     "I ran out of time" is fine if it's true. Pretending nothing is left is
-     not.
+- **Generation still omits relevant policy advice.** All three current
+  deadline answers omit the syllabus/instructor-dependent policy, despite
+  receiving it. They give supported extension and illness advice, so this
+  remains a completeness limitation outside the original targets. Next I
+  would evaluate factual coverage and qualifications on a larger question
+  set, then test a general answer-completeness instruction without inserting
+  question-specific facts. I stopped after the measured experiments rather
+  than making more prompt changes without a stronger evaluation.
+- **Retrieval still ranks some less useful chunks ahead of the answer.** The
+  current late-work chunk remains third. The library fact now reaches the
+  model, but hybrid search previously excluded it and can promote incidental
+  word matches such as internship applications that “close.” Next I would
+  compare fusion weights or a relevance reranker on held-out questions, with
+  answer-bearing chunk rank and coverage measured together. I stopped because
+  the five familiar questions are too small a set to justify further tuning
+  or claim that the current hybrid settings generalize.
+- **Latency reliability remains uncertain.** Every current call is under
+  10 seconds, but the earlier prompt-only run contains a real 69.9-second
+  miss. These end-to-end timings cannot identify whether retrieval, the
+  service, or the network caused that delay. Next I would record stage
+  durations and repeat uncached measurements across several sessions. I
+  stopped with the existing timing boundary so the submitted comparisons
+  remain consistent; the old miss is preserved, not declared fixed by one
+  faster run.
 
-     Milestone 5. -->
+The final settings also send more context: input tokens increased from 7,143
+in the previous hybrid evaluation to 14,301 in the current one. Chunk size and
+top-k changed together, so their individual effects were not isolated. I
+would vary one at a time next. I am stopping with a reproducible current
+configuration, an honestly measured recovery of library coverage, and these
+remaining limitations documented, rather than treating five passing scores
+as proof that the system is complete.
 
 ## What I'd Do Differently
 
-<!-- Knowing what you know now — which of your five criteria would you write
-     differently, and why?
+In the next unit, I would rewrite **criterion 2** to require that all five
+answers in every run both cite a supporting retrieved document and include
+the expected fact and relevant qualifications. Naming a filename alone let
+incomplete deadline answers and unhelpful library refusals pass. I would
+judge facts semantically so correct paraphrases count, and define the needed
+facts before collecting results.
 
-     Milestone 5. -->
+I would also strengthen **criterion 3's test set** with five questions that
+sound like student advice but ask for details the corpus does not contain,
+instead of only unrelated subjects. Those would test the gate near its actual
+decision boundary. I would retain the 10-second response requirement in
+**criterion 5**, but evaluate it across more sessions and record stage timings
+so a latency miss can be diagnosed. These are future evaluation proposals;
+none changes the original criteria or rescoring of this unit's results.
+
+## Submission
+
+Use the same repository as Unit 1:
+[xanbaba/ai201-project1-unofficial-guide-starter-v2026](https://github.com/xanbaba/ai201-project1-unofficial-guide-starter-v2026).
+The existing `origin` remote points to this repository. The original criteria,
+Unit 1 history, baseline, earlier experiments, and current after evidence are
+retained. The current after evidence is
+`results/run_2026-10-04_1627_after-chunking.md` with supplementary retrieval,
+timing, and audit records in `results/milestone4_after_chunking_evidence.json`.
