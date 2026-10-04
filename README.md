@@ -521,6 +521,111 @@ original criteria. No system improvement has been made in Milestone 3.
 
 ## The Improvement
 
+### Current configuration and rebuilt index
+
+The current after evaluation uses the user's updated configuration:
+`CHUNK_SIZE = 900`, `SENTENCE_OVERLAP = 2`, and `TOP_K = 5`.
+Hybrid retrieval and the improved grounding prompt remain unchanged. Following
+`RUNNING.md`, I ran `.venv\Scripts\python.exe app.py index` before evaluating.
+The default advice-thread index was rebuilt with real embeddings from the
+same corpus. [Saved indexing output](results/index_after_chunking.txt):
+
+```text
+  loaded   23 documents, 12,490 characters, ~543 characters per document
+  chunked  23 chunks, 543 characters on average (shortest 317, longest 793), produced by chunker.py::split_documents, parser fallback for 0 document(s)
+  embedding 23 chunks (first run downloads the model)...
+  stored   23 chunks in 1.3s
+```
+
+Every thread now fits in one chunk, retaining its complete replies and exact
+thread question. Since no thread exceeds the 900-character limit, there are
+no continuation chunks and the two-sentence overlap setting is not exercised
+on this corpus. The original 500-character strategy produced 42 chunks.
+
+### Run Log — After
+
+This is the **current after log**, measured on October 4, 2026
+(America/New_York). Command:
+`.venv\Scripts\python.exe tools/milestone1_eval.py --label after-chunking`.
+The descriptive label preserves the earlier after files rather than
+overwriting evidence. Sources:
+[complete answers and gate measurements](results/run_2026-10-04_1627_after-chunking.md)
+and [retrievals, timings, settings, prompt, and full-index audits](results/milestone4_after_chunking_evidence.json).
+There were 15 uncached model calls and 14,889 tokens (14,301 input, 588 output).
+
+| Criterion | Original target | Run 1 | Run 2 | Run 3 | Verdict |
+|---|---|---|---|---|---|
+| 1. Retrieved chunks contain the answer | At least 4 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 2. Every answer names a source | 5 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 3. Gate stops out-of-corpus questions | At least 4 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 4. Every chunk retains its exact source thread question | Every indexed chunk (now 23) | 23/23 | 23/23 | 23/23 | MET |
+| 5. The complete workflow is fast | Every question within 10 seconds | 5/5 | 5/5 | 5/5 | MET |
+
+The saved top-five chunks contain the expected answer for all five questions
+in every run, and every generated answer names a retrieved source. The gate
+refuses all five unrelated questions in its deterministic pass; its 5/5 result
+is repeated in all three columns. All 23 stored chunks begin with their exact
+source thread question in each complete audit. All 15 calls finish within 10
+seconds; the maximum is 3.062284 seconds. Criterion 4's original target is
+“every chunk,” so checking 23/23 applies that unchanged requirement to the new
+index rather than changing the criterion.
+
+| Question topic | Run 1 (seconds) | Run 2 (seconds) | Run 3 (seconds) |
+|---|---|---|---|
+| Assignment deadline | 2.707882 | 0.880215 | 1.995624 |
+| Study spot with coffee | 0.803638 | 0.693891 | 0.637479 |
+| Verbal transfer-credit approval | 0.744735 | 0.796116 | 3.062284 |
+| Meal-plan change | 0.708192 | 1.433061 | 0.701741 |
+| Library closing time | 0.711354 | 0.716109 | 0.587939 |
+
+### Current before and after comparison
+
+| Criterion | Original baseline R1/R2/R3 | Previous hybrid R1/R2/R3 | Current after R1/R2/R3 |
+|---|---|---|---|
+| 1. Retrieved answer evidence | 5/5, 5/5, 5/5 — MET | 4/5, 4/5, 4/5 — MET | 5/5, 5/5, 5/5 — MET |
+| 2. Source naming | 5/5, 5/5, 5/5 — MET | 5/5, 5/5, 5/5 — MET | 5/5, 5/5, 5/5 — MET |
+| 3. Out-of-corpus gate | 5/5, 5/5, 5/5 — MET | 5/5, 5/5, 5/5 — MET | 5/5, 5/5, 5/5 — MET |
+| 4. Exact thread headings | 42/42, 42/42, 42/42 — MET | 42/42, 42/42, 42/42 — MET | 23/23, 23/23, 23/23 — MET |
+| 5. Within 10 seconds | 5/5, 5/5, 5/5 — MET | 5/5, 5/5, 5/5 — MET | 5/5, 5/5, 5/5 — MET |
+
+**Did it help?** The updated configuration restored library answer coverage:
+all three library answers now give 2am, whereas the previous hybrid run refused
+all three, bringing retrieval coverage back from 4/5 to 5/5 in every run.
+All five original criteria are MET. The original baseline already scored 5/5,
+so this restores the lost coverage rather than exceeding its criterion counts.
+
+Actual current library answer, run 1, produced by
+`generate.py::answer_from_chunks` and saved in the after-chunking report:
+
+```text
+According to `thread_sleep_schedule.txt`, the library is open until 2am.
+```
+
+The larger chunks also supply the entire late-work thread, including the
+documented-illness route. All three deadline answers include that route, but
+none mentions the syllabus policy, so the earlier generation-completeness
+limitation is still present. Actual current deadline answer, run 1:
+
+```text
+You should ask for an extension before the deadline rather than after. Almost everyone will grant a couple of days if you ask beforehand, but almost nobody will if you ask after the deadline has passed (thread_late_work.txt). Additionally, if your lateness is due to a documented illness, you should go through the dean of students rather than the instructor (thread_late_work.txt).
+```
+
+This is a combined configuration experiment: both chunk size/overlap and
+`TOP_K` changed at the user's direction. It does not isolate chunking as the
+cause of restored library coverage. The model now receives five larger chunks,
+and input tokens rose from 7,143 in the previous hybrid run to 14,301 here.
+That is more context with a corresponding token cost. Earlier results,
+including the 69.9-second call in the prompt-only experiment, are preserved.
+
+Validation: all 12 chunker and hybrid unit tests pass. The existing corpus test
+previously hardcoded 42 chunks; it now explicitly checks both the original
+500-character/one-sentence strategy (42 chunks) and the current
+900-character/two-sentence strategy (23 chunks), retaining exact-header and
+size checks for both. The criteria, questions, corpus, models, cutoff, prompt,
+and hybrid algorithm have not been changed in this experiment.
+
+### Earlier prompt-only experiment
+
 **What I changed:** I added one rule to
 `generate.py::GROUNDING_INSTRUCTION`, used by
 `generate.py::answer_from_chunks`:
@@ -542,7 +647,7 @@ answers without improving coverage. I tested this single rule without changing
 the model, corpus, index, chunking, top-k, relevance cutoff, test questions, or
 acceptance criteria.
 
-### Run Log — After
+### Earlier run log — prompt only
 
 Measured on October 4, 2026 (America/New_York), using
 `.venv\Scripts\python.exe tools/milestone1_eval.py --label after`.
@@ -591,7 +696,7 @@ Actual slow-call console output from the measurement wrapper:
   run 3: —  (best distance 0.4775)
 ```
 
-### Before and after side by side
+### Earlier comparison — baseline and prompt only
 
 The original Milestone 1 log above and the after log use the same five targets.
 This comparison repeats both sets of counts to make the change visible:

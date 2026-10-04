@@ -1,6 +1,7 @@
 """Focused tests for the reply-aware custom chunker."""
 
 import unittest
+from unittest.mock import patch
 
 import config
 from chunker import _chunk_document, _parse_thread, describe, split_documents
@@ -64,14 +65,17 @@ class ChunkerTests(unittest.TestCase):
     def test_real_advice_threads_have_exact_headers_and_valid_sizes(self):
         documents = load_documents("advice_threads")
         headers = {document.source: document.text.splitlines()[0] for document in documents}
-        chunks = split_documents(documents)
-        self.assertEqual(len(chunks), 42)
-        self.assertTrue(all(not chunk.parser_fallback for chunk in chunks))
-        self.assertTrue(all(len(chunk.text) <= config.CHUNK_SIZE for chunk in chunks))
-        self.assertTrue(all(chunk.text.startswith(headers[chunk.source]) for chunk in chunks))
-        for source in headers:
-            indices = [chunk.index for chunk in chunks if chunk.source == source]
-            self.assertEqual(indices, list(range(len(indices))))
+        for size, overlap, count in ((500, 1, 42), (900, 2, 23)):
+            with self.subTest(size=size, overlap=overlap):
+                with patch.object(config, "CHUNK_SIZE", size), patch.object(config, "SENTENCE_OVERLAP", overlap):
+                    chunks = split_documents(documents)
+                self.assertEqual(len(chunks), count)
+                self.assertTrue(all(not chunk.parser_fallback for chunk in chunks))
+                self.assertTrue(all(len(chunk.text) <= size for chunk in chunks))
+                self.assertTrue(all(chunk.text.splitlines()[0] == headers[chunk.source] for chunk in chunks))
+                for source in headers:
+                    indices = [chunk.index for chunk in chunks if chunk.source == source]
+                    self.assertEqual(indices, list(range(len(indices))))
 
 
 if __name__ == "__main__":
