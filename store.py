@@ -234,6 +234,15 @@ def index_exists(corpus: str | None = None, variant: str = "default") -> bool:
         return False
 
 
+def index_size(corpus: str | None = None, variant: str = "default") -> int:
+    """Return the stored chunk count for reproducible evaluation reports."""
+    name = config.collection_name(corpus, variant)
+    try:
+        return _client().get_collection(name).count()
+    except Exception as exc:
+        raise RuntimeError(f"No index called '{name}'. Run `python app.py index` first.") from exc
+
+
 def reset():
     """Delete every index. Occasionally the fastest way out of a mess."""
     if config.CHROMA_DIR.exists():

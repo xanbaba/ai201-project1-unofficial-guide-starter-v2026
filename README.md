@@ -140,17 +140,20 @@ Room changes happen at the semester boundary almost always, and mid-semester onl
 **Answer:**
 
 ```
-Yes, you can change your meal plan, but you can only change it once and only within the first ten days (thread_meal_plan_tier.txt).
+Yes, you can change your meal plan, but you can only change it once and only within the first ten days (from `thread_meal_plan_tier.txt`).
 
 Sources retrieved: thread_commuting.txt, thread_meal_plan_tier.txt
 ```
 
 **My relevance cutoff:** 0.60
 
-My five in-corpus questions had best distances from 0.254 to 0.583. The five
-out-of-corpus questions ranged from 0.810 to 0.929. There was a gap between
-0.583 and 0.810, so I chose 0.60: it is above every in-corpus result but below
-every unrelated result.
+The authoritative measurement is `results/run_2026-09-23_1955_unit1-final.md`.
+It used the 42-chunk `advice_threads` index from
+`chunker.py::split_documents` (500-character maximum, one-sentence overlap),
+`TOP_K = 3`, and a 0.60 cutoff. My five in-corpus questions had best distances
+from 0.2538 to 0.5827. The five out-of-corpus questions ranged from 0.8097 to
+0.9290. There was a gap between 0.5827 and 0.8097, so 0.60 is above every
+in-corpus result but below every unrelated result.
 
 <!-- The number you set in config.py, and how you got there.
 
@@ -163,16 +166,16 @@ every unrelated result.
 
 | Question | In corpus? | Best distance |
 |---|---|---|
-| What to do if I cannot finish my assignment by deadline? | Yes | 0.478 |
-| What study spots do you know that have good coffee nearby? | Yes | 0.426 |
-| I want to transfer credits for my major. My department agreed verbally. | Yes | 0.254 |
-| Can I change my meal plan? | Yes | 0.414 |
-| When does library close | Yes | 0.583 |
-| What is the capital of Mongolia? | No | 0.929 |
-| How do I change the oil in a diesel engine? | No | 0.912 |
-| Who won the 1994 World Cup? | No | 0.917 |
-| What is the recommended dosage of ibuprofen for a headache? | No | 0.810 |
-| How do I write a for loop in Rust? | No | 0.871 |
+| What to do if I cannot finish my assignment by deadline? | Yes | 0.4775 |
+| What study spots do you know that have good coffee nearby? | Yes | 0.4259 |
+| I want to transfer credits for my major. My department agreed verbally. | Yes | 0.2538 |
+| Can I change my meal plan? | Yes | 0.4137 |
+| When does library close | Yes | 0.5827 |
+| What is the capital of Mongolia? | No | 0.9290 |
+| How do I change the oil in a diesel engine? | No | 0.9121 |
+| Who won the 1994 World Cup? | No | 0.9165 |
+| What is the recommended dosage of ibuprofen for a headache? | No | 0.8097 |
+| How do I write a for loop in Rust? | No | 0.8712 |
 
 ## How I Used AI
 

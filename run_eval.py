@@ -116,7 +116,7 @@ def main():
             run_results.append(passed)
 
             mark = {True: "pass", False: "fail", None: "—"}[passed]
-            print(f"  run {run}: {mark}  (best distance {decision.best_distance:.3f})")
+            print(f"  run {run}: {mark}  (best distance {decision.best_distance:.4f})")
 
             transcript.append(
                 {
@@ -162,7 +162,7 @@ def check_out_of_scope(top_k, threshold, corpus, variant):
         decision = gate.check(results, threshold=threshold)
         refused = not decision.passed
         print(f"  {'refused' if refused else 'LET THROUGH'}  "
-              f"(best distance {decision.best_distance:.3f})  {question}")
+              f"(best distance {decision.best_distance:.4f})  {question}")
         rows.append(
             {
                 "question": question,
@@ -177,6 +177,8 @@ def check_out_of_scope(top_k, threshold, corpus, variant):
 
 
 def write_report(rows, transcript, gate_rows, args, corpus, top_k, threshold, scored):
+    from store import index_size
+
     config.RESULTS_DIR.mkdir(exist_ok=True)
     stamp = dt.datetime.now().strftime("%Y-%m-%d_%H%M")
     label = f"_{args.label}" if args.label else ""
@@ -185,14 +187,18 @@ def write_report(rows, transcript, gate_rows, args, corpus, top_k, threshold, sc
     n = len(rows[0]["runs"]) if rows else 0
     run_headers = " | ".join(f"Run {i}" for i in range(1, n + 1))
     run_divider = "|".join(["---"] * n)
+    indexed_chunks = index_size(corpus, args.variant)
 
     lines = [
         f"# Run log{f' — {args.label}' if args.label else ''}",
         "",
         f"- Produced by: `run_eval.py::main`",
-        f"- Retrieval: `store.py::search`, chunks from `chunker.py::split_documents`",
+        f"- Chunking: `chunker.py::split_documents` · {config.CHUNK_SIZE}-character maximum · "
+        f"{config.SENTENCE_OVERLAP}-sentence overlap",
         f"- Corpus: `{corpus}` (index variant `{args.variant}`)",
-        f"- top-k: {top_k} · relevance cutoff: {threshold}",
+        f"- Indexed chunks: {indexed_chunks}",
+        f"- Retrieval: `store.py::search` · TOP_K = {top_k} · relevance cutoff = {threshold:.2f}",
+        f"- Embedding model: `{config.EMBEDDING_MODEL}`",
         f"- Runs per question: {n}, caching off",
         f"- When: {dt.datetime.now().strftime('%Y-%m-%d %H:%M')}",
         "",
@@ -227,7 +233,7 @@ def write_report(rows, transcript, gate_rows, args, corpus, top_k, threshold, sc
             "",
             "## The relevance gate on out-of-corpus questions",
             "",
-            f"Produced by `run_eval.py::check_out_of_scope`, cutoff {threshold}. "
+            f"Produced by `run_eval.py::check_out_of_scope`, cutoff {threshold:.2f}. "
             f"Refused {refused} of {len(gate_rows)}.",
             "",
             "Retrieval is deterministic and the gate is a comparison against a",
@@ -240,7 +246,7 @@ def write_report(rows, transcript, gate_rows, args, corpus, top_k, threshold, sc
         for row in gate_rows:
             question = row["question"].replace("|", "\\|")
             verdict = "refused" if row["refused"] else "**let through**"
-            lines.append(f"| {question} | {row['best_distance']:.3f} | {verdict} |")
+            lines.append(f"| {question} | {row['best_distance']:.4f} | {verdict} |")
 
     lines += ["", "---", "", "## Real output", "",
               "This is what the system actually produced. Paste the relevant parts",

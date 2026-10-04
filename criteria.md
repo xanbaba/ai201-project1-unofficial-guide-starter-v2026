@@ -53,11 +53,12 @@ in at least 4 of 5 tries.
 <!-- What did your distances look like when you set the cutoff in Milestone 4?
      Was there a clean gap, or did the two groups overlap? -->
 
-My in-corpus questions had best distances from 0.254 to 0.583, while the
-out-of-corpus questions ranged from 0.810 to 0.929. The gap supported the
-0.60 cutoff. I chose 4 of 5 rather than requiring every question to be
-refused because an unrelated question can still share words or a broad topic
-with a student-advice thread and produce one close semantic match.
+The final measurement in `results/run_2026-09-23_1955_unit1-final.md` had
+in-corpus best distances from 0.2538 to 0.5827, while out-of-corpus questions
+ranged from 0.8097 to 0.9290. The gap supported the 0.60 cutoff. I chose 4 of
+5 rather than requiring every question to be refused because an unrelated
+question can still share words or a broad topic with a student-advice thread
+and produce one close semantic match.
 
 ---
 
