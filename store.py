@@ -18,6 +18,7 @@ rest of the project if they were wrong:
 """
 
 import os
+import re
 import shutil
 from dataclasses import dataclass
 
@@ -28,6 +29,7 @@ from dataclasses import dataclass
 os.environ.setdefault("ANONYMIZED_TELEMETRY", "False")
 
 import chromadb  # noqa: E402
+from rank_bm25 import BM25Okapi
 
 import config
 from chunker import Chunk
@@ -42,6 +44,9 @@ class Result:
     label: str
     distance: float   # LOWER IS BETTER. 0.3 is close, 0.9 is unrelated.
     produced_by: str
+    hybrid_score: float = 0.0
+    semantic_rank: int = 0
+    keyword_rank: int | None = None
 
 
 _model = None
@@ -178,6 +183,50 @@ def build_index(
     return len(chunks)
 
 
+def _tokens(text: str) -> list[str]:
+    """Case-insensitive words/numbers; omit common grammatical words."""
+    stopwords = {
+        "a", "an", "and", "are", "as", "at", "be", "by", "can", "do", "does",
+        "for", "from", "have", "how", "i", "if", "in", "is", "it", "my", "of",
+        "on", "or", "that", "the", "this", "to", "was", "what", "when", "where",
+        "which", "who", "with", "you", "your",
+    }
+    return [word for word in re.findall(r"[^\W_]+", text.casefold())
+            if word not in stopwords]
+
+
+def _hybrid_rank(results: list[Result], question: str, top_k: int) -> list[Result]:
+    """Fuse semantic and positive BM25 ranks using equal-weight RRF (k=60).
+
+    Retain the nearest semantic chunk in the selected set so the existing
+    cosine relevance gate keeps the same best-distance measurement. Output
+    order follows fusion score, not cosine distance. No BM25 score is passed
+    off as a cosine distance.
+    """
+    if not results:
+        return []
+    tokens = [_tokens(result.text) for result in results]
+    scores = (BM25Okapi(tokens).get_scores(_tokens(question))
+              if any(tokens) else [0.0] * len(results))
+    keyword_order = sorted(
+        (i for i, score in enumerate(scores) if score > 0),
+        key=lambda i: (-scores[i], results[i].label),
+    )
+    keyword_ranks = {i: rank for rank, i in enumerate(keyword_order, 1)}
+    for i, result in enumerate(results):
+        result.semantic_rank = i + 1
+        result.keyword_rank = keyword_ranks.get(i)
+        result.hybrid_score = 1 / (60 + result.semantic_rank)
+        if result.keyword_rank is not None:
+            result.hybrid_score += 1 / (60 + result.keyword_rank)
+    ranked = sorted(results, key=lambda r: (-r.hybrid_score, r.semantic_rank, r.label))
+    selected = ranked[:top_k]
+    if results[0] not in selected:
+        selected[-1] = results[0]
+        selected.sort(key=lambda r: (-r.hybrid_score, r.semantic_rank, r.label))
+    return selected
+
+
 def search(
     question: str,
     top_k: int | None = None,
@@ -185,9 +234,11 @@ def search(
     variant: str = "default",
 ) -> list[Result]:
     """
-    Retrieve the chunks closest in meaning to a question.
+    Combine semantic similarity and BM25 keywords over the indexed chunks.
 
-    Returns them nearest-first, each with its distance.
+    Return fusion-ranked chunks, each with its original cosine distance and
+    the two component ranks. The small starter corpora allow ranking all
+    chunks; larger corpora would need bounded candidate retrieval.
     """
     top_k = top_k or config.TOP_K
     name = config.collection_name(corpus, variant)
@@ -199,9 +250,14 @@ def search(
             f"No index called '{name}'. Run `python app.py index` first."
         ) from exc
 
+    count = collection.count()
+    if not count:
+        return []
+    if top_k < 1:
+        raise ValueError("top_k must be positive")
     raw = collection.query(
         query_embeddings=embed([question]),
-        n_results=min(top_k, collection.count()),
+        n_results=count,
     )
 
     results: list[Result] = []
@@ -217,7 +273,7 @@ def search(
                 produced_by=str(meta.get("produced_by", "unknown")),
             )
         )
-    return results
+    return _hybrid_rank(results, question, min(top_k, count))
 
 
 def index_exists(corpus: str | None = None, variant: str = "default") -> bool:

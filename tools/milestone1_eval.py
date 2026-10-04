@@ -49,9 +49,13 @@ def audit_chunks():
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--label", choices=["before", "after"], default="before")
+    parser.add_argument("--label", choices=["before", "after", "hybrid", "hybrid-retest"], default="before")
     args = parser.parse_args()
     filename = "milestone1_before_evidence.json" if args.label == "before" else "milestone4_after_evidence.json"
+    if args.label == "hybrid":
+        filename = "milestone4_hybrid_evidence.json"
+    if args.label == "hybrid-retest":
+        filename = "milestone4_hybrid_retest_evidence.json"
     path = config.RESULTS_DIR / filename
     if path.exists():
         raise FileExistsError(f"Preserve existing evaluation evidence: {path}")
@@ -62,6 +66,7 @@ def main():
         "embedding_model": config.EMBEDDING_MODEL,
         "top_k": config.TOP_K, "threshold": config.THRESHOLD,
         "label": args.label, "grounding_instruction": generate.GROUNDING_INSTRUCTION,
+        "retrieval": "semantic + BM25, equal-weight reciprocal rank fusion (k=60)",
         "cache": False, "trials": [], "chunk_audits": [],
     }
 

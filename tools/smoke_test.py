@@ -62,7 +62,7 @@ def fake_client():
     return Client()
 
 
-def main():
+def _run_checks():
     print("AI201 unit 1 starter — smoke test\n" + "-" * 60)
 
     # Route every model call to the fake.
@@ -92,9 +92,9 @@ def main():
         results = search("what should I know about this?", corpus=corpus)
         check(f"  retrieves", len(results) > 0, f"top-{len(results)}")
         check(
-            f"  results are ordered nearest first",
+            f"  results are ordered by hybrid score",
             all(
-                results[i].distance <= results[i + 1].distance
+                results[i].hybrid_score >= results[i + 1].hybrid_score
                 for i in range(len(results) - 1)
             ),
         )
@@ -167,6 +167,17 @@ def main():
         print(f"{len(failures)} FAILED: {', '.join(failures)}")
         sys.exit(1)
     print("All checks passed.")
+
+
+def main():
+    # Fake embeddings must never overwrite a developer's real collections.
+    original_dir = config.CHROMA_DIR
+    with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmp:
+        config.CHROMA_DIR = Path(tmp)
+        try:
+            _run_checks()
+        finally:
+            config.CHROMA_DIR = original_dir
 
 
 if __name__ == "__main__":

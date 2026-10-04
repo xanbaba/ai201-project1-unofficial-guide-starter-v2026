@@ -654,6 +654,140 @@ with the long trial preserved rather than discarded. I kept the tested prompt
 change and made no second improvement or replacement evaluation in this
 milestone.
 
+### Additional measured improvement — hybrid search
+
+Declared before implementation: I am adding BM25 keyword retrieval alongside
+semantic retrieval and combining their rankings. The prompt-only experiment
+above remains documented. This second experiment keeps that prompt fixed and
+tests retrieval ranking: the answer-bearing late-work and library-hours chunks
+were third in the semantic results. I will measure the same five original
+criteria and separately compare answer-bearing chunk ranks. No criterion is
+being changed.
+
+**Implementation:** `store.py::search` now retrieves the semantic ranking of
+all existing indexed chunks and scores their text with `rank_bm25.BM25Okapi`.
+Both query and chunk text are tokenized into lowercase Unicode words and
+numbers, with common grammatical words removed. Positive keyword matches are
+ranked by BM25 score. Equal-weight reciprocal rank fusion combines the lists:
+`1 / (60 + semantic_rank) + 1 / (60 + keyword_rank)`; a chunk with no positive
+keyword score receives only its semantic contribution. Ties use semantic rank
+and chunk ID, so ordering is deterministic. The final three results are sorted
+by fusion score rather than distance.
+
+The nearest semantic chunk is retained in the selected set, replacing the
+last fused candidate if necessary. This keeps the gate's best cosine distance
+comparable to the original calibration. `Result.distance` remains a real
+cosine distance; BM25 and fusion scores are never compared with the 0.60
+cutoff. `app.py retrieve` now prints fusion scores and both component ranks
+alongside distances. With `top_k=1`, retaining the nearest semantic result
+means keyword ranking cannot change the selected chunk. Ranking the whole
+index is suitable for these small corpora; a larger deployment would need
+bounded candidate retrieval.
+
+The prior prompt improvement was retained unchanged, so the comparison with
+the prompt-only after run isolates hybrid retrieval. No question-specific
+prompt rule, query rewrite, or expected-answer keyword was added.
+
+### Hybrid run log
+
+Valid command: `.venv\Scripts\python.exe tools/milestone1_eval.py --label hybrid-retest`.
+Evidence: [full answers and gate output](results/run_2026-10-04_1609_hybrid-retest.md),
+[retrieved chunks, component ranks, timings, prompt, and full audits](results/milestone4_hybrid_retest_evidence.json),
+and [answer-bearing chunk ranking comparison](results/hybrid_ranking_comparison.json).
+There were 15 uncached model calls and 7,804 tokens (7,143 input, 661 output).
+The same 42 advice-thread chunks, embedding model, generation model, cutoff,
+top-k, questions, and original criteria were used.
+
+| Criterion | Original target | Run 1 | Run 2 | Run 3 | Verdict |
+|---|---|---|---|---|---|
+| 1. Retrieved chunks contain the answer | At least 4 of 5 | 4/5 | 4/5 | 4/5 | MET |
+| 2. Every answer names a source | 5 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 3. Gate stops out-of-corpus questions | At least 4 of 5 | 5/5 | 5/5 | 5/5 | MET |
+| 4. Every chunk retains its exact source thread question | All 42 chunks | 42/42 | 42/42 | 42/42 | MET |
+| 5. The complete workflow is fast | Every question within 10 seconds | 5/5 | 5/5 | 5/5 | MET |
+
+Criterion 1 only just meets its target: the library question has no
+answer-bearing chunk in any of its three retrievals. The other four questions
+still retrieve their expected facts. All 15 model responses name a retrieved
+source, including the library refusals, so criterion 2 remains MET; that
+source-naming result does not establish answer usefulness. The deterministic
+out-of-corpus gate again refuses 5/5 questions, with the original distances.
+Three full-index audits each verify all 42 exact source headings. All 15
+responses finish within 10 seconds, including the three generated refusals.
+
+| Question topic | Run 1 (seconds) | Run 2 (seconds) | Run 3 (seconds) |
+|---|---|---|---|
+| Assignment deadline | 2.595364 | 0.721352 | 0.882670 |
+| Study spot with coffee | 0.958837 | 0.932506 | 0.665272 |
+| Verbal transfer-credit approval | 0.727239 | 0.740011 | 0.766983 |
+| Meal-plan change | 0.671936 | 0.809251 | 1.008581 |
+| Library closing time | 0.718000 | 0.700021 | 0.723240 |
+
+### Comparison with semantic retrieval
+
+The baseline and prompt-only runs both used semantic retrieval and had the
+same answer-bearing chunk ranks. The prompt-only after run is the direct
+comparison because it uses the same grounding prompt as the hybrid run.
+
+| Criterion | Semantic + original prompt R1/R2/R3 | Semantic + improved prompt R1/R2/R3 | Hybrid + improved prompt R1/R2/R3 |
+|---|---|---|---|
+| 1. Retrieved answer evidence | 5/5, 5/5, 5/5 — MET | 5/5, 5/5, 5/5 — MET | 4/5, 4/5, 4/5 — MET |
+| 2. Source naming | 5/5, 5/5, 5/5 — MET | 5/5, 5/5, 5/5 — MET | 5/5, 5/5, 5/5 — MET |
+| 3. Out-of-corpus gate | 5/5, 5/5, 5/5 — MET | 5/5, 5/5, 5/5 — MET | 5/5, 5/5, 5/5 — MET |
+| 4. Exact thread headings | 42/42, 42/42, 42/42 — MET | 42/42, 42/42, 42/42 — MET | 42/42, 42/42, 42/42 — MET |
+| 5. Within 10 seconds | 5/5, 5/5, 5/5 — MET | 5/5, 5/5, 4/5 — MISSED | 5/5, 5/5, 5/5 — MET |
+
+| Answer-bearing chunk | Semantic rank | BM25 rank | Final hybrid position in top three |
+|---|---|---|---|
+| `thread_late_work.txt#0` | 3 | 2 | 3 |
+| `thread_study_spots.txt#0` | 1 | 1 | 1 |
+| `thread_transfer_credits.txt#0` | 1 | 1 | 1 |
+| `thread_meal_plan_tier.txt#1` | 1 | 1 | 1 |
+| `thread_sleep_schedule.txt#0` | 3 | 6 | Excluded (fused rank 5) |
+
+**Did hybrid search help?** It did not improve the answer-bearing chunk ranks
+in this test set, and it made retrieval coverage worse by excluding the only
+chunk containing the library's 2am closing time. All original criteria still
+pass because criterion 1 permits one miss; that does not erase the regression.
+
+**Stage and mechanism of the library regression: retrieval.** BM25 ranks the
+sleep-schedule chunk sixth for `When does library close`; fusion places it
+fifth, outside `TOP_K = 3`. The selected internship thread contains “close”
+in “close applications,” an exact word match about a different topic. The
+nearest semantic library-study chunk keeps the gate open, but it contains no
+closing time. Generation then appropriately declines to invent one.
+
+Actual hybrid library answer, run 3, produced by
+`generate.py::answer_from_chunks` and saved in the hybrid-retest report:
+
+```text
+I don't have enough information to answer when the library closes (thread_study_spots.txt and thread_internship_timing.txt).
+```
+
+The deadline chunk stays third because the first-year chunk ranks second
+semantically and first lexically, while the group-project chunk ranks first
+semantically and fourth lexically. Their combined scores still exceed the
+late-work chunk's score. The syllabus qualification appears in 1/3 hybrid
+deadline answers versus 0/3 in the prompt-only run, but this small improvement
+in generated wording does not establish a reliable fix or a ranking gain.
+All hybrid calls were under three seconds; the earlier 69.9-second call remains
+in its original result set, and these timings do not prove hybrid search
+caused faster service responses.
+
+**Verification and invalid-run handling:** Five focused unit tests pass,
+covering exact-term promotion, unmatched-keyword fallback, refusal preservation,
+single-result gate preservation, and Unicode/numeric tokenization. The smoke
+test passes across all four corpora. During the first hybrid evaluation, the
+starter smoke test was mistakenly run against the working database and
+overwrote real embeddings with its fake test embeddings. That evaluation is
+explicitly marked invalid in `results/run_2026-10-04_1607_hybrid.md` and
+`results/milestone4_hybrid_evidence.json` and is excluded from every comparison.
+The smoke test now uses a temporary database. Real embeddings were restored
+using the unchanged corpus and chunker, all five original best distances were
+checked against the baseline after the isolated smoke test, and only then was
+the valid hybrid-retest evaluation performed. Baseline and prompt-only result
+files were not altered.
+
 ## What's Still Broken
 
 <!-- For each criterion still missed after your fix: what you'd do about it,

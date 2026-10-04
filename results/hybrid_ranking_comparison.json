@@ -1,0 +1,47 @@
+[
+  {
+    "question": "What to do if I cannot finish my assignment by deadline?",
+    "answer_chunk": "thread_late_work.txt#0",
+    "before_rank": 3,
+    "hybrid_selected_rank": 3,
+    "semantic_rank": 3,
+    "keyword_rank": 2,
+    "full_fusion_rank": 3
+  },
+  {
+    "question": "What study spots do you know that have good coffee nearby?",
+    "answer_chunk": "thread_study_spots.txt#0",
+    "before_rank": 1,
+    "hybrid_selected_rank": 1,
+    "semantic_rank": 1,
+    "keyword_rank": 1,
+    "full_fusion_rank": 1
+  },
+  {
+    "question": "I want to transfer credits for my major. My department agreed verbally.",
+    "answer_chunk": "thread_transfer_credits.txt#0",
+    "before_rank": 1,
+    "hybrid_selected_rank": 1,
+    "semantic_rank": 1,
+    "keyword_rank": 1,
+    "full_fusion_rank": 1
+  },
+  {
+    "question": "Can I change my meal plan?",
+    "answer_chunk": "thread_meal_plan_tier.txt#1",
+    "before_rank": 1,
+    "hybrid_selected_rank": 1,
+    "semantic_rank": 1,
+    "keyword_rank": 1,
+    "full_fusion_rank": 1
+  },
+  {
+    "question": "When does library close",
+    "answer_chunk": "thread_sleep_schedule.txt#0",
+    "before_rank": 3,
+    "hybrid_selected_rank": null,
+    "semantic_rank": 3,
+    "keyword_rank": 6,
+    "full_fusion_rank": 5
+  }
+]
